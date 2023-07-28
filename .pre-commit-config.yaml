@@ -1,0 +1,15 @@
+repos:
+  - repo: local
+    hooks:
+      - id: lint
+        name: lint
+        entry: deno lint
+        language: system
+        files: \.ts$
+        pass_filenames: false
+      - id: format
+        name: format
+        entry: deno fmt --check
+        language: system
+        files: \.ts$
+        pass_filenames: false

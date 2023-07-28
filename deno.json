@@ -1,0 +1,22 @@
+{
+  "lint": {
+    "exclude": [
+      "build",
+      "packages/xentral-api/open-api"
+    ],
+    "rules": {
+      "tags": [
+        "recommended"
+      ]
+    }
+  },
+  "fmt": {
+    "exclude": [
+      "build",
+      "packages/xentral-api/open-api"
+    ],
+    "semiColons": false,
+    "singleQuote": true,
+    "proseWrap": "preserve"
+  }
+}

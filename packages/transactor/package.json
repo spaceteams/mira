@@ -1,0 +1,15 @@
+{
+  "name": "transactor",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "vitest",
+    "test:ci": "vitest run"
+  },
+  "dependencies": {
+    "parser": "file:../packages/model",
+    "pg": "^8.11.1"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.10.2"
+  }
+}
