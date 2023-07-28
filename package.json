@@ -1,7 +1,7 @@
 {
-  "name": "spacesql",
+  "name": "sql-node-delight",
   "version": "1.0.0",
-  "description": "",
+  "description": "generate typesafe typescript apis from sql statements",
   "main": "index.js",
   "workspaces": [
     "app",
