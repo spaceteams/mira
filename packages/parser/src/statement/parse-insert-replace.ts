@@ -8,7 +8,6 @@ import {
 import { Insert_Replace } from 'node-sql-parser'
 import { Value } from './value'
 import { parseSelect } from './parse-select'
-import { Select } from 'node-sql-parser'
 
 function extractFromValues(
   node: Insert_Replace,

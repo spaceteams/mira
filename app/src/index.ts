@@ -1,5 +1,5 @@
 import { watch } from 'chokidar'
-import { readFileSync, writeFileSync, readdirSync } from 'fs'
+import { readdirSync, readFileSync, writeFileSync } from 'fs'
 import { parse } from 'path'
 import { parseSchema, parseStatement } from '../../packages/parser'
 import { Schema } from 'model'
@@ -56,7 +56,6 @@ watcher.on('change', (file) => {
     }
   } catch (e) {
     console.log(e)
-  } finally {
   }
 })
 watcher.on('add', (file) => {
@@ -78,6 +77,5 @@ watcher.on('add', (file) => {
     }
   } catch (e) {
     console.log(e)
-  } finally {
   }
 })

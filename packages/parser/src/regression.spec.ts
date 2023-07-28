@@ -1,16 +1,16 @@
 import {
-  simple,
-  joinAndAggregate,
-  subquery,
+  complexInsert,
   conditionalStatement,
   cte,
   Fixture,
-  windowFunctions,
+  joinAndAggregate,
+  multiParamDelete,
   multiParamInsert,
   multiParamUpdate,
-  multiParamDelete,
   nestedSubqueryWithWindow,
-  complexInsert,
+  simple,
+  subquery,
+  windowFunctions,
 } from 'model/src/fixtures'
 import { parseSchema } from './schema'
 import { parseStatement } from './statement'

@@ -1,10 +1,10 @@
 import {
-  simple,
-  joinAndAggregate,
-  subquery,
   conditionalStatement,
   cte,
   Fixture,
+  joinAndAggregate,
+  simple,
+  subquery,
 } from 'model/src/fixtures'
 import { generate } from './codegen'
 

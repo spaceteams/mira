@@ -1,19 +1,14 @@
 import { DataType, Statement } from 'model'
+import { KeywordTypeSyntaxKind, TypeElement, TypeNode } from 'typescript'
 import {
-  KeywordTypeSyntaxKind,
-  PropertySignature,
-  TypeElement,
-  TypeNode,
-} from 'typescript'
-import {
-  factory,
-  createSourceFile,
-  ScriptTarget,
-  ScriptKind,
   createPrinter,
+  createSourceFile,
+  factory,
   NewLineKind,
-  SyntaxKind,
   NodeFlags,
+  ScriptKind,
+  ScriptTarget,
+  SyntaxKind,
 } from 'typescript'
 
 function dataTypeToTsType(dataType: DataType): TypeNode {
@@ -110,7 +105,7 @@ export function generate(
           name,
           undefined,
           dataTypeToTsType(dataType),
-        ),
+        )
       ),
       factory.createParameterDeclaration(
         undefined,

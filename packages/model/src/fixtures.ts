@@ -445,23 +445,41 @@ export const nestedSubqueryWithWindow: Fixture = {
   statement: {
     columns: [
       {
-        name: 'product',
+        name: 'name',
         dataType: { type: 'TEXT' },
       },
       {
-        name: 'order_date',
+        name: 'category',
+        dataType: { type: 'TEXT' },
+      },
+      {
+        name: 'sale_date',
         dataType: { type: 'DATE' },
       },
       {
-        name: 'quantity',
+        name: 'revenue',
+        dataType: { type: 'DECIMAL' },
+      },
+      {
+        name: 'rank',
         dataType: { type: 'INTEGER' },
       },
     ],
     variables: [
       {
-        name: 'where_rank_num',
-        dataType: { type: 'INTEGER' },
+        name: 'whereSaleDateBetween',
+        dataType: { type: 'DATE' },
         position: 0,
+      },
+      {
+        name: 'whereSaleDateBetween',
+        dataType: { type: 'DATE' },
+        position: 1,
+      },
+      {
+        name: 'whereRankLte',
+        dataType: { type: 'INTEGER' },
+        position: 2,
       },
     ],
   },

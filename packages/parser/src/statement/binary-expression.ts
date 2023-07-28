@@ -1,10 +1,12 @@
 import { AST, ColumnRef } from 'node-sql-parser'
 import { Origin, Value, Variable } from './value'
 import {
+  DataType,
+  findColumnFromAliasesType,
   Schema,
+  StatementColumn,
   StatementVariable,
   TableAlias,
-  findColumnFromAliasesType,
 } from 'model'
 import { parseNode } from './parse-node'
 
@@ -19,8 +21,14 @@ function operatorStringify(operator: string): string {
   switch (operator) {
     case 'BETWEEN':
       return 'Between'
+    case '+':
+      return 'Plus'
+    case '-':
+      return 'Minus'
     case '*':
       return 'Mul'
+    case '/':
+      return 'Div'
     case '<=':
       return 'Lte'
     case '<':
@@ -34,10 +42,10 @@ function operatorStringify(operator: string): string {
   }
   return ''
 }
-type ValueList = [{ ast: AST }] | (Value | ColumnRef)[]
-type ExprList = { type: 'expr_list'; value: ValueList }
+export type ValueList = [{ ast: AST }] | (Value | ColumnRef)[]
+export type ExprList = { type: 'expr_list'; value: ValueList }
 type BinaryExpressionBranch = ColumnRef | Value | BinaryExpression | ExprList
-type BinaryExpression = {
+export type BinaryExpression = {
   type: 'binary_expr'
   operator: string
   left: BinaryExpressionBranch
@@ -52,25 +60,32 @@ function buildVariable(
   variable: Variable | Origin,
   schema: Schema,
   aliases: TableAlias[],
+  columns: StatementColumn[],
   prefix: string,
   offset: number,
 ): StatementVariable {
-  const columnType = findColumnFromAliasesType(
-    column.table,
-    column.column,
-    schema,
-    aliases,
-  ) ?? {
-    type: 'UNKNOWN',
+  let columnType: DataType | undefined
+  if (column.table === null) {
+    columnType = columns.find((c) => c.name === column.column)?.dataType
+  }
+  if (columnType === undefined) {
+    columnType = findColumnFromAliasesType(
+      column.table,
+      column.column,
+      schema,
+      aliases,
+    )
   }
   return {
     position: variable.type === 'origin' ? offset : variable.name - 1,
     name: capitalize(
-      `${prefix}${prefix.length > 0 ? '_' : ''}${
-        column.column
-      }${operatorStringify(operator)}`,
+      `${prefix}${prefix.length > 0 ? '_' : ''}${column.column}${
+        operatorStringify(operator)
+      }`,
     ),
-    dataType: columnType,
+    dataType: columnType ?? {
+      type: 'UNKNOWN',
+    },
   }
 }
 function getFirstColumnRef(
@@ -91,6 +106,7 @@ export function extractVariablesFromValueList(
   column: ColumnRef,
   schema: Schema,
   aliases: TableAlias[],
+  columns: StatementColumn[],
   prefix: string,
   offset: number,
 ) {
@@ -106,7 +122,16 @@ export function extractVariablesFromValueList(
       )
     } else if (v.type === 'var' || v.type === 'origin') {
       variables.push(
-        buildVariable(operator, column, v, schema, aliases, prefix, offset),
+        buildVariable(
+          operator,
+          column,
+          v,
+          schema,
+          aliases,
+          columns,
+          prefix,
+          offset,
+        ),
       )
     }
   }
@@ -116,17 +141,26 @@ export function extractVariables(
   expr: BinaryExpression,
   schema: Schema,
   aliases: TableAlias[],
+  columns: StatementColumn[],
   prefix: string,
   offset: number,
 ): StatementVariable[] {
   if (expr.left.type === 'binary_expr' && expr.right.type === 'binary_expr') {
-    const l = extractVariables(expr.left, schema, aliases, prefix, offset)
+    const l = extractVariables(
+      expr.left,
+      schema,
+      aliases,
+      columns,
+      prefix,
+      offset,
+    )
     return [
       ...l,
       ...extractVariables(
         expr.right,
         schema,
         aliases,
+        columns,
         prefix,
         offset + l.length,
       ),
@@ -143,6 +177,7 @@ export function extractVariables(
         expr.right,
         schema,
         aliases,
+        columns,
         prefix,
         offset,
       ),
@@ -160,6 +195,7 @@ export function extractVariables(
         expr.left,
         schema,
         aliases,
+        columns,
         prefix,
         offset,
       ),
@@ -175,6 +211,7 @@ export function extractVariables(
         column,
         schema,
         aliases,
+        columns,
         prefix,
         offset,
       )
@@ -189,6 +226,7 @@ export function extractVariables(
         column,
         schema,
         aliases,
+        columns,
         prefix,
         offset,
       )

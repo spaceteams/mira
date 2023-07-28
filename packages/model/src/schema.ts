@@ -9,7 +9,7 @@ export type TableSchema = {
 export type Schema = {
   tables: TableSchema[]
 }
-export function withCTE(
+export function withStatement(
   schema: Schema,
   name: string,
   statement: Statement,
@@ -50,7 +50,7 @@ export function getColumnType(
 
 export type TableAlias = {
   table: string
-  as: string
+  as?: string
 }
 
 export function findColumnFromAliasesType(
