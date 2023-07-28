@@ -18,13 +18,19 @@ const isColumnDefinition = (v: unknown): v is ColumnDefinition =>
   'resource' in v &&
   v.resource === 'column'
 
-export function parseSchema(sql: string): Schema {
+export function parseSchema(sql: string, schema?: Schema | undefined): Schema {
   const ast = parse(sql)
-  const tables: TableSchema[] = []
+  let tables: TableSchema[] = [...(schema?.tables ?? [])]
 
   for (const node of safeArray(ast)) {
     switch (node.type) {
       case 'create': {
+        const tableName = node.table?.[0].table
+        if (tableName === undefined) {
+          throw new Error('table name missing')
+        }
+        tables = tables.filter((t) => t.name !== tableName)
+
         const columns: Record<string, DataType> = {}
         const columnNames: string[] = []
         for (const definition of node.create_definitions ?? []) {
@@ -37,7 +43,6 @@ export function parseSchema(sql: string): Schema {
             columnNames.push(name)
           }
         }
-        const tableName = node.table?.[0].table
         if (tableName !== undefined) {
           tables.push({
             name: tableName,

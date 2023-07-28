@@ -7,5 +7,5 @@ export function complexInsert(salaryMul: number, whereDepartmentEq: string, clie
   FROM employees
   WHERE department = $2;
   `;
-    return execute<{}>({ sql, values: [salaryMul, whereDepartmentEq] as const }, client);
+    return execute({ sql, values: [salaryMul, whereDepartmentEq] as const }, client);
 }

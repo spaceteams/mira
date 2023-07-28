@@ -1,16 +1,16 @@
 import { DataType, Statement, StatementVariable } from 'model'
 import {
-  KeywordTypeSyntaxKind,
-  TypeElement,
-  TypeNode,
   createPrinter,
   createSourceFile,
   factory,
+  KeywordTypeSyntaxKind,
   NewLineKind,
   NodeFlags,
   ScriptKind,
   ScriptTarget,
   SyntaxKind,
+  TypeElement,
+  TypeNode,
 } from 'typescript'
 
 function dataTypeToTsType(dataType: DataType): TypeNode {
@@ -120,7 +120,7 @@ export function generate(
       factory.createReturnStatement(
         factory.createCallExpression(
           factory.createIdentifier('execute'),
-          [objectLiteral],
+          statement.columns.length > 0 ? [objectLiteral] : undefined,
           [boundStatement, factory.createIdentifier('client')],
         ),
       ),

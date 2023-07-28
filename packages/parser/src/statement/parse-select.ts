@@ -47,7 +47,7 @@ function getFirstLiteralDataType(expr: Expression): DataType | undefined {
     case 'binary_expression':
       return (
         getFirstLiteralDataType(expr.left) ??
-        getFirstLiteralDataType(expr.right)
+          getFirstLiteralDataType(expr.right)
       )
     default:
       return undefined
@@ -80,11 +80,11 @@ function getDataTypeOfWindowFunc(
       const column = getFirstColumnRefFromValueList(expr.args.value)
       return column
         ? findColumnFromAliasesType(
-            column.table,
-            column.column,
-            schema,
-            aliases,
-          )
+          column.table,
+          column.column,
+          schema,
+          aliases,
+        )
         : { type: 'UNKNOWN' }
     }
     default:
@@ -103,19 +103,19 @@ type Expression =
   | Origin
   | WindowFunc
   | {
-      type: 'aggr_func'
-      name: string
-      args: { expr: ColumnRef }
-    }
+    type: 'aggr_func'
+    name: string
+    args: { expr: ColumnRef }
+  }
   | {
-      type: 'case'
-      args: [{ result: Expression }]
-    }
+    type: 'case'
+    args: [{ result: Expression }]
+  }
   | {
-      type: 'binary_expression' | 'binary_expr'
-      left: Expression
-      right: Expression
-    }
+    type: 'binary_expression' | 'binary_expr'
+    left: Expression
+    right: Expression
+  }
   | { type: 'single_quote_string' }
   | { type: 'number' }
 
@@ -162,10 +162,9 @@ export function parseSelect(node: Select, schema: Schema): Statement {
   const ctes = node.with as unknown as With[]
   for (const cte of ctes ?? []) {
     const statement = parseNode(cte.stmt as unknown as AST, schema)
-    const name =
-      typeof cte.name === 'string'
-        ? cte.name
-        : (cte.name as unknown as { value: string }).value
+    const name = typeof cte.name === 'string'
+      ? cte.name
+      : (cte.name as unknown as { value: string }).value
     extendedSchema = withStatement(extendedSchema, name, statement)
   }
   for (const column of safeArray(node.columns)) {

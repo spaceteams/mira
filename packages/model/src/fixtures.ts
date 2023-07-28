@@ -122,7 +122,8 @@ export const star: Fixture = {
 export const partialStar: Fixture = {
   schemaSql: joinAndAggregate.schemaSql,
   schema: joinAndAggregate.schema,
-  sql: 'SELECT o.* FROM orders o JOIN order_details od ON o.order_id = od.order_id',
+  sql:
+    'SELECT o.* FROM orders o JOIN order_details od ON o.order_id = od.order_id',
   statement: {
     columns: [
       {

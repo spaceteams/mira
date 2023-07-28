@@ -4,5 +4,5 @@ export function multiParamUpdate(setPointsPlus: number, whereNameEq: string, cli
     const sql = `
   UPDATE customers SET points = points + $1 WHERE name = $2;
   `;
-    return execute<{}>({ sql, values: [setPointsPlus, whereNameEq] as const }, client);
+    return execute({ sql, values: [setPointsPlus, whereNameEq] as const }, client);
 }

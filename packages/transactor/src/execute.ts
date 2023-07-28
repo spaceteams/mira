@@ -7,7 +7,7 @@ export async function execute<T extends QueryResultRow>(
 ): Promise<T[]> {
   const response = await client.query<T>(
     statement.sql,
-    statement.values as any[],
+    statement.values as unknown[],
   )
   return response.rows
 }
