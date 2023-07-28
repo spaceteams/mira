@@ -1,6 +1,6 @@
 import { ClientBase } from "pg";
 import { execute } from "transactor";
-export function multiParamInsert(name: string, points: number, client: ClientBase) {
+export function multiParamInsert(name: string, points: number, client?: ClientBase) {
     const sql = `
     INSERT INTO customers (name, points) VALUES ($1, $2);
   `;

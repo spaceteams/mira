@@ -140,13 +140,13 @@ export function generate(
           name,
           undefined,
           dataTypeToTsType(dataType),
-        ),
+        )
       ),
       factory.createParameterDeclaration(
         undefined,
         undefined,
         'client',
-        undefined,
+        factory.createToken(SyntaxKind.QuestionToken),
         factory.createTypeReferenceNode('ClientBase'),
       ),
     ],

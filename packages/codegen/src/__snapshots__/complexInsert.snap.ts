@@ -1,6 +1,6 @@
 import { ClientBase } from "pg";
 import { execute } from "transactor";
-export function complexInsert(salaryMul: number, whereDepartmentEq: string, client: ClientBase) {
+export function complexInsert(salaryMul: number, whereDepartmentEq: string, client?: ClientBase) {
     const sql = `
   INSERT INTO bonuses (employee_id, bonus)
   SELECT employee_id, salary * $1 AS bonus_amount

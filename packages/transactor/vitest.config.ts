@@ -4,5 +4,6 @@ export default defineConfig({
   test: {
     globals: true,
     mockReset: true,
+    globalSetup: './packages/transactor/setupVitest.ts',
   },
 })

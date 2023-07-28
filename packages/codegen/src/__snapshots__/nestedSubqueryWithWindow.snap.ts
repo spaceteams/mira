@@ -1,6 +1,6 @@
 import { ClientBase } from "pg";
 import { execute } from "transactor";
-export function nestedSubqueryWithWindow(whereSaleDateBetween1: Date, whereSaleDateBetween2: Date, whereRankLte: number, client: ClientBase) {
+export function nestedSubqueryWithWindow(whereSaleDateBetween1: Date, whereSaleDateBetween2: Date, whereRankLte: number, client?: ClientBase) {
     const sql = `
   SELECT name, category, sale_date, revenue,
     RANK() OVER (PARTITION BY category ORDER BY revenue DESC) AS rank

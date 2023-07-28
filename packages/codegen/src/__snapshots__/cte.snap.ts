@@ -1,6 +1,6 @@
 import { ClientBase } from "pg";
 import { execute } from "transactor";
-export function cte(whereRankNumLte: number, client: ClientBase) {
+export function cte(whereRankNumLte: number, client?: ClientBase) {
     const sql = `
     WITH ranked_orders AS (
         SELECT product, order_date, quantity,

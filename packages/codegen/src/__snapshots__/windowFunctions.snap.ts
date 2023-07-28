@@ -1,6 +1,6 @@
 import { ClientBase } from "pg";
 import { execute } from "transactor";
-export function windowFunctions(whereSaleDateBetween1: Date, whereSaleDateBetween2: Date, client: ClientBase) {
+export function windowFunctions(whereSaleDateBetween1: Date, whereSaleDateBetween2: Date, client?: ClientBase) {
     const sql = `
   SELECT product, sale_date, amount,
     LAG(amount) OVER (PARTITION BY product ORDER BY sale_date) AS prev_sale_amount,

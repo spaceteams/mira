@@ -1,6 +1,6 @@
 import { ClientBase } from "pg";
 import { execute } from "transactor";
-export function star(client: ClientBase) {
+export function star(client?: ClientBase) {
     const sql = `SELECT * FROM orders`;
     return execute<{
         order_id: number;

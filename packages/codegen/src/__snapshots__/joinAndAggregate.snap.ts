@@ -1,6 +1,6 @@
 import { ClientBase } from "pg";
 import { execute } from "transactor";
-export function joinAndAggregate(whereQuantityGt: number, client: ClientBase) {
+export function joinAndAggregate(whereQuantityGt: number, client?: ClientBase) {
     const sql = `
     SELECT o.product, SUM(od.price) AS total_price
     FROM orders o

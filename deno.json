@@ -1,8 +1,7 @@
 {
   "lint": {
     "exclude": [
-      "build",
-      "packages/xentral-api/open-api"
+      "build"
     ],
     "rules": {
       "tags": [
@@ -13,7 +12,7 @@
   "fmt": {
     "exclude": [
       "build",
-      "packages/xentral-api/open-api"
+      "packages/**/__snapshots__"
     ],
     "semiColons": false,
     "singleQuote": true,

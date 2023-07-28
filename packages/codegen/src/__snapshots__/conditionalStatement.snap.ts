@@ -1,6 +1,6 @@
 import { ClientBase } from "pg";
 import { execute } from "transactor";
-export function conditionalStatement(whereSalaryGt: number, client: ClientBase) {
+export function conditionalStatement(whereSalaryGt: number, client?: ClientBase) {
     const sql = `
         SELECT name,
         CASE

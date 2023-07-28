@@ -1,6 +1,6 @@
 import { ClientBase } from "pg";
 import { execute } from "transactor";
-export function subquery(whereGradeGt: number, client: ClientBase) {
+export function subquery(whereGradeGt: number, client?: ClientBase) {
     const sql = `
     SELECT name, major FROM students
     WHERE student_id IN (
