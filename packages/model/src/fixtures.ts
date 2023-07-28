@@ -96,6 +96,52 @@ export const joinAndAggregate: Fixture = {
   },
 }
 
+export const star: Fixture = {
+  schemaSql: joinAndAggregate.schemaSql,
+  schema: joinAndAggregate.schema,
+  sql: 'SELECT * FROM orders',
+  statement: {
+    columns: [
+      {
+        name: 'order_id',
+        dataType: { type: 'SERIAL' },
+      },
+      {
+        name: 'product',
+        dataType: { type: 'TEXT' },
+      },
+      {
+        name: 'quantity',
+        dataType: { type: 'INTEGER' },
+      },
+    ],
+    variables: [],
+  },
+}
+
+export const partialStar: Fixture = {
+  schemaSql: joinAndAggregate.schemaSql,
+  schema: joinAndAggregate.schema,
+  sql: 'SELECT o.* FROM orders o JOIN order_details od ON o.order_id = od.order_id',
+  statement: {
+    columns: [
+      {
+        name: 'order_id',
+        dataType: { type: 'SERIAL' },
+      },
+      {
+        name: 'product',
+        dataType: { type: 'TEXT' },
+      },
+      {
+        name: 'quantity',
+        dataType: { type: 'INTEGER' },
+      },
+    ],
+    variables: [],
+  },
+}
+
 export const subquery: Fixture = {
   schemaSql: `
     CREATE TABLE students (student_id SERIAL PRIMARY KEY, name TEXT, major TEXT);
@@ -534,3 +580,18 @@ export const complexInsert: Fixture = {
     ],
   },
 }
+export const allRegressionCases: [string, Fixture][] = [
+  ['simple', simple],
+  ['joinAndAggregate', joinAndAggregate],
+  ['star', star],
+  ['partialStar', partialStar],
+  ['subquery', subquery],
+  ['conditionalStatement', conditionalStatement],
+  ['cte', cte],
+  ['windowFunctions', windowFunctions],
+  ['multiParamInsert', multiParamInsert],
+  ['multiParamUpdate', multiParamUpdate],
+  ['multiParamDelete', multiParamDelete],
+  ['nestedSubqueryWithWindow', nestedSubqueryWithWindow],
+  ['complexInsert', complexInsert],
+]

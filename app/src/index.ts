@@ -5,12 +5,14 @@ import { parseSchema, parseStatement } from '../../packages/parser'
 import { Schema } from 'model'
 import { generate } from '../../packages/codegen/src/codegen'
 
-const basePath = './sql'
+const basePath = 'sql'
 
 const dir = readdirSync(basePath)
 
 const isSchemaFile = (f: string) => f === 'schema.sql'
 const isSqlFile = (f: string) => f.endsWith('.sql')
+const isKnownSqlFile = (f: string) =>
+  isSqlFile(f) && knownFiles.sqlFiles.includes(f)
 
 const knownFiles = {
   schemaFiles: dir.filter(isSchemaFile).map((f) => `${basePath}/${f}`),
@@ -59,7 +61,7 @@ watcher.on('change', (file) => {
   }
 })
 watcher.on('add', (file) => {
-  if (!isSqlFile(file)) {
+  if (!isKnownSqlFile(file)) {
     return
   }
   try {

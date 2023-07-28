@@ -40,6 +40,14 @@ export function getTable(
 ): TableSchema | undefined {
   return schema.tables.find((t) => nameEquals(t.name, tableName))
 }
+export function getAliasedTable(
+  tableName: string,
+  schema: Schema,
+  aliases: TableAlias[],
+): TableSchema | undefined {
+  const name = aliases.find((a) => a.as === tableName)?.table ?? tableName
+  return getTable(name, schema)
+}
 export function getColumnType(
   tableName: string,
   columnName: string,

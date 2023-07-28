@@ -1,6 +1,8 @@
-import { DataType, Statement } from 'model'
-import { KeywordTypeSyntaxKind, TypeElement, TypeNode } from 'typescript'
+import { DataType, Statement, StatementVariable } from 'model'
 import {
+  KeywordTypeSyntaxKind,
+  TypeElement,
+  TypeNode,
   createPrinter,
   createSourceFile,
   factory,
@@ -28,11 +30,47 @@ function dataTypeToTsType(dataType: DataType): TypeNode {
   }
 }
 
+function normalizeVariables(
+  variables: StatementVariable[],
+): StatementVariable[] {
+  const result: StatementVariable[] = []
+
+  const sortedVariables = [...variables].sort((a, b) => a.position - b.position)
+
+  const byName: Record<string, StatementVariable[]> = {}
+  for (const variable of sortedVariables) {
+    if (byName[variable.name] === undefined) {
+      byName[variable.name] = []
+    }
+    byName[variable.name].push(variable)
+  }
+
+  for (const v of Object.values(byName)) {
+    if (v.length === 1) {
+      result.push(v[0])
+    } else {
+      for (let i = 0; i < v.length; i++) {
+        const variable = v[i]
+        result.push({
+          position: variable.position,
+          name: `${variable.name}${i + 1}`,
+          dataType: variable.dataType,
+        })
+      }
+    }
+  }
+
+  result.sort((a, b) => a.position - b.position)
+  return result
+}
+
 export function generate(
   name: string,
   sql: string,
   statement: Statement,
 ): string {
+  const variables = normalizeVariables(statement.variables)
+
   const sqlVariable = factory.createVariableStatement(
     undefined,
     factory.createVariableDeclarationList(
@@ -54,7 +92,7 @@ export function generate(
       'values',
       factory.createAsExpression(
         factory.createArrayLiteralExpression(
-          statement.variables.map((v) => factory.createIdentifier(v.name)),
+          variables.map((v) => factory.createIdentifier(v.name)),
         ),
         factory.createKeywordTypeNode(
           SyntaxKind.ConstKeyword as KeywordTypeSyntaxKind,
@@ -89,9 +127,6 @@ export function generate(
     ],
     true,
   )
-  const variables = [...statement.variables].sort(
-    (a, b) => a.position - b.position,
-  )
   const mainFunc = factory.createFunctionDeclaration(
     [factory.createToken(SyntaxKind.ExportKeyword)],
     undefined,
@@ -105,7 +140,7 @@ export function generate(
           name,
           undefined,
           dataTypeToTsType(dataType),
-        )
+        ),
       ),
       factory.createParameterDeclaration(
         undefined,

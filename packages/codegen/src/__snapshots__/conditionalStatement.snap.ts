@@ -1,10 +1,7 @@
-import { ClientBase } from 'pg'
-import { execute } from 'transactor'
-export function conditionalStatement(
-  whereSalaryGt: number,
-  client: ClientBase,
-) {
-  const sql = `
+import { ClientBase } from "pg";
+import { execute } from "transactor";
+export function conditionalStatement(whereSalaryGt: number, client: ClientBase) {
+    const sql = `
         SELECT name,
         CASE
             WHEN department = 'HR' THEN salary * 1.1
@@ -12,9 +9,9 @@ export function conditionalStatement(
             ELSE salary
         END AS adjusted_salary
         FROM employees WHERE salary > $1;
-    `
-  return execute<{
-    name: string
-    adjusted_salary: number
-  }>({ sql, values: [whereSalaryGt] as const }, client)
+    `;
+    return execute<{
+        name: string;
+        adjusted_salary: number;
+    }>({ sql, values: [whereSalaryGt] as const }, client);
 }

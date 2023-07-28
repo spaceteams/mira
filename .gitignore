@@ -1,5 +1,6 @@
 .envrc
 .direnv
+.vscode
 
 node_modules
 .idea
