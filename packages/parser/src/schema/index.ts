@@ -67,19 +67,23 @@ export function parseSchema(sql: string, schema?: Schema | undefined): Schema {
         for (const expr of node.expr as AlterExpr[]) {
           switch (expr.action) {
             case 'add':
-              const name = expr.column.column
-              table.columns[expr.column.column.toLowerCase()] =
-                DataTypeSchema.parse({
-                  ...expr.definition,
-                  type: expr.definition.dataType,
-                })
-              table.columnNames.push(name)
+              {
+                const name = expr.column.column
+                table.columns[expr.column.column.toLowerCase()] = DataTypeSchema
+                  .parse({
+                    ...expr.definition,
+                    type: expr.definition.dataType,
+                  })
+                table.columnNames.push(name)
+              }
               break
             case 'drop':
-              table.columnNames = table.columnNames.filter(
-                (c) => c !== expr.column.column,
-              )
-              delete table.columns[expr.column.column]
+              {
+                table.columnNames = table.columnNames.filter(
+                  (c) => c !== expr.column.column,
+                )
+                delete table.columns[expr.column.column]
+              }
               break
           }
         }

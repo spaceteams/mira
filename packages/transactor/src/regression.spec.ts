@@ -53,15 +53,19 @@ it('migrateAndCast', async () => {
     expect(await migrateAndCast(client)).toMatchInlineSnapshot(`
       [
         {
+          "rating_text": "1.00",
           "salary_int": 300,
         },
         {
+          "rating_text": "2.00",
           "salary_int": 400,
         },
         {
+          "rating_text": "3.00",
           "salary_int": 501,
         },
         {
+          "rating_text": "4.00",
           "salary_int": 800,
         },
       ]

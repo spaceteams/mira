@@ -122,7 +122,8 @@ export const star: Fixture = {
 export const partialStar: Fixture = {
   schemaSql: joinAndAggregate.schemaSql,
   schema: joinAndAggregate.schema,
-  sql: 'SELECT o.* FROM orders o JOIN order_details od ON o.order_id = od.order_id',
+  sql:
+    'SELECT o.* FROM orders o JOIN order_details od ON o.order_id = od.order_id',
   statement: {
     columns: [
       {
@@ -603,10 +604,16 @@ export const migrateAndCast: Fixture = {
     ],
   },
   sql: `
-  select CAST(salary AS int) salary_int from employees
+  select
+    CAST(salary AS int) salary_int,
+    rating::text rating_text
+  from employees
   `,
   statement: {
-    columns: [{ name: 'salary_int', dataType: { type: 'INT' } }],
+    columns: [
+      { name: 'salary_int', dataType: { type: 'INT' } },
+      { name: 'rating_text', dataType: { type: 'TEXT' } },
+    ],
     variables: [],
   },
 }
