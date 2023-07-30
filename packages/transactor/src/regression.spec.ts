@@ -1,10 +1,11 @@
-import { windowFunctions as callWindow } from '../../codegen/src/__snapshots__/windowFunctions.snap'
-import { windowFunctions } from 'model/src/fixtures'
+import { windowFunctions } from '../../codegen/src/__snapshots__/windowFunctions.snap'
+import { migrateAndCast } from '../../codegen/src/__snapshots__/migrateAndCast.snap'
+import * as fixtures from 'model/src/fixtures'
 import { withTestClient } from './transactor'
 
 it('window functions', async () => {
   await withTestClient(async (client) => {
-    await client.query(windowFunctions.schemaSql)
+    await client.query(fixtures.windowFunctions.schemaSql)
     await client.query(`
     INSERT INTO sales (sale_id, product, sale_date, amount) VALUES
       (0, 'p', '2012-03-01', 3),
@@ -13,7 +14,11 @@ it('window functions', async () => {
       (3, 'p', '2012-03-04', 3)
     `)
     expect(
-      await callWindow(new Date('2012-03-02'), new Date('2012-03-03'), client),
+      await windowFunctions(
+        new Date('2012-03-02'),
+        new Date('2012-03-03'),
+        client,
+      ),
     ).toMatchInlineSnapshot(`
       [
         {
@@ -29,6 +34,35 @@ it('window functions', async () => {
           "prev_sale_amount": "3",
           "product": "p",
           "sale_date": 2012-03-02T23:00:00.000Z,
+        },
+      ]
+    `)
+  })
+})
+
+it('migrateAndCast', async () => {
+  await withTestClient(async (client) => {
+    await client.query(fixtures.migrateAndCast.schemaSql)
+    await client.query(`
+    INSERT INTO employees (employee_id, name, salary, rating) VALUES
+      (0, 'name', 300, 1),
+      (1, 'name', 400.1, 2),
+      (2, 'name', 500.9, 3),
+      (3, 'name', 800, 4)
+    `)
+    expect(await migrateAndCast(client)).toMatchInlineSnapshot(`
+      [
+        {
+          "salary_int": 300,
+        },
+        {
+          "salary_int": 400,
+        },
+        {
+          "salary_int": 501,
+        },
+        {
+          "salary_int": 800,
         },
       ]
     `)

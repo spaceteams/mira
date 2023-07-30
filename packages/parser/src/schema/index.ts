@@ -2,6 +2,7 @@ import { ColumnRef } from 'node-sql-parser'
 import { parse } from '../parser'
 import { safeArray } from '../safe-array'
 import { DataType, DataTypeSchema, Schema, TableSchema } from 'model'
+import { From } from 'node-sql-parser'
 
 type DataDefinition = {
   dataType: string
@@ -17,6 +18,10 @@ const isColumnDefinition = (v: unknown): v is ColumnDefinition =>
   v !== null &&
   'resource' in v &&
   v.resource === 'column'
+
+type AlterExpr =
+  | { action: 'add'; column: ColumnRef; definition: DataDefinition }
+  | { action: 'drop'; column: ColumnRef }
 
 export function parseSchema(sql: string, schema?: Schema | undefined): Schema {
   const ast = parse(sql)
@@ -53,7 +58,32 @@ export function parseSchema(sql: string, schema?: Schema | undefined): Schema {
         break
       }
       case 'alter': {
-        throw new Error('alter is not supported yet')
+        const table = tables.find(
+          (t) => t.name === (node.table as unknown as From[])[0].table,
+        )
+        if (table === undefined) {
+          throw new Error(`table ${node.table.table} could not be found`)
+        }
+        for (const expr of node.expr as AlterExpr[]) {
+          switch (expr.action) {
+            case 'add':
+              const name = expr.column.column
+              table.columns[expr.column.column.toLowerCase()] =
+                DataTypeSchema.parse({
+                  ...expr.definition,
+                  type: expr.definition.dataType,
+                })
+              table.columnNames.push(name)
+              break
+            case 'drop':
+              table.columnNames = table.columnNames.filter(
+                (c) => c !== expr.column.column,
+              )
+              delete table.columns[expr.column.column]
+              break
+          }
+        }
+        break
       }
       default: {
         throw new Error(`${node.type} is not supported`)

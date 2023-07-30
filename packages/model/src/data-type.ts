@@ -8,6 +8,11 @@ export const DataTypeSchema = z.discriminatedUnion('type', [
   z.object({ type: z.literal('SERIAL') }),
   z.object({ type: z.literal('TEXT') }),
   z.object({ type: z.literal('VARCHAR'), length: z.number() }),
+  z.object({
+    type: z.literal('NUMERIC'),
+    length: z.number(),
+    scale: z.number(),
+  }),
   z.object({ type: z.literal('UNKNOWN') }),
 ])
 

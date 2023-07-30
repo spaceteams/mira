@@ -122,8 +122,7 @@ export const star: Fixture = {
 export const partialStar: Fixture = {
   schemaSql: joinAndAggregate.schemaSql,
   schema: joinAndAggregate.schema,
-  sql:
-    'SELECT o.* FROM orders o JOIN order_details od ON o.order_id = od.order_id',
+  sql: 'SELECT o.* FROM orders o JOIN order_details od ON o.order_id = od.order_id',
   statement: {
     columns: [
       {
@@ -581,6 +580,37 @@ export const complexInsert: Fixture = {
     ],
   },
 }
+
+export const migrateAndCast: Fixture = {
+  schemaSql: `
+  CREATE TABLE employees (employee_id SERIAL PRIMARY KEY, name TEXT, department TEXT, salary DECIMAL);
+  ALTER TABLE employees
+    ADD rating NUMERIC(19, 2),
+    DROP department;
+  `,
+  schema: {
+    tables: [
+      {
+        name: 'employees',
+        columnNames: ['employee_id', 'name', 'salary', 'rating'],
+        columns: {
+          employee_id: { type: 'SERIAL' },
+          name: { type: 'TEXT' },
+          salary: { type: 'DECIMAL' },
+          rating: { type: 'NUMERIC', length: 19, scale: 2 },
+        },
+      },
+    ],
+  },
+  sql: `
+  select CAST(salary AS int) salary_int from employees
+  `,
+  statement: {
+    columns: [{ name: 'salary_int', dataType: { type: 'INT' } }],
+    variables: [],
+  },
+}
+
 export const allRegressionCases: [string, Fixture][] = [
   ['simple', simple],
   ['joinAndAggregate', joinAndAggregate],
@@ -595,4 +625,5 @@ export const allRegressionCases: [string, Fixture][] = [
   ['multiParamDelete', multiParamDelete],
   ['nestedSubqueryWithWindow', nestedSubqueryWithWindow],
   ['complexInsert', complexInsert],
+  ['migrateAndCast', migrateAndCast],
 ]
