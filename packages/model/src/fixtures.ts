@@ -2,6 +2,7 @@ import { Schema } from './schema'
 import { Statement } from './statement'
 
 export type Fixture = {
+  dialects: string[]
   schemaSql: string
   schema: Schema
   sql: string
@@ -9,6 +10,7 @@ export type Fixture = {
 }
 
 export const simple: Fixture = {
+  dialects: ['postgresql', 'sqlite'],
   schemaSql:
     'CREATE TABLE employees (id SERIAL PRIMARY KEY, name TEXT, age INTEGER);',
   schema: {
@@ -43,6 +45,7 @@ export const simple: Fixture = {
 }
 
 export const joinAndAggregate: Fixture = {
+  dialects: ['postgresql', 'sqlite'],
   schemaSql: `
     CREATE TABLE orders (order_id SERIAL PRIMARY KEY, product TEXT, quantity INTEGER);
     CREATE TABLE order_details (order_id INTEGER REFERENCES orders(order_id), price DECIMAL);
@@ -97,6 +100,7 @@ export const joinAndAggregate: Fixture = {
 }
 
 export const star: Fixture = {
+  dialects: ['postgresql', 'sqlite'],
   schemaSql: joinAndAggregate.schemaSql,
   schema: joinAndAggregate.schema,
   sql: 'SELECT * FROM orders',
@@ -120,6 +124,7 @@ export const star: Fixture = {
 }
 
 export const partialStar: Fixture = {
+  dialects: ['postgresql', 'sqlite'],
   schemaSql: joinAndAggregate.schemaSql,
   schema: joinAndAggregate.schema,
   sql:
@@ -144,6 +149,7 @@ export const partialStar: Fixture = {
 }
 
 export const subquery: Fixture = {
+  dialects: ['postgresql', 'sqlite'],
   schemaSql: `
     CREATE TABLE students (student_id SERIAL PRIMARY KEY, name TEXT, major TEXT);
     CREATE TABLE grades (student_id INTEGER REFERENCES students(student_id), grade DECIMAL);
@@ -197,6 +203,7 @@ export const subquery: Fixture = {
 }
 
 export const conditionalStatement: Fixture = {
+  dialects: ['postgresql', 'sqlite'],
   schemaSql:
     'CREATE TABLE employees (id SERIAL PRIMARY KEY, name TEXT, department TEXT, salary DECIMAL);',
   schema: {
@@ -244,6 +251,7 @@ export const conditionalStatement: Fixture = {
 }
 
 export const cte: Fixture = {
+  dialects: ['postgresql', 'sqlite'],
   schemaSql:
     'CREATE TABLE orders (order_id SERIAL PRIMARY KEY, product TEXT, order_date DATE, quantity INTEGER);',
   schema: {
@@ -296,6 +304,7 @@ export const cte: Fixture = {
 }
 
 export const windowFunctions: Fixture = {
+  dialects: ['postgresql', 'sqlite'],
   schemaSql:
     'CREATE TABLE sales (sale_id SERIAL PRIMARY KEY, product TEXT, sale_date DATE, amount DECIMAL);',
   schema: {
@@ -358,6 +367,7 @@ export const windowFunctions: Fixture = {
 }
 
 export const multiParamInsert: Fixture = {
+  dialects: ['postgresql', 'sqlite'],
   schemaSql:
     'CREATE TABLE customers (customer_id SERIAL PRIMARY KEY, name TEXT, points INTEGER)',
   schema: {
@@ -394,6 +404,7 @@ export const multiParamInsert: Fixture = {
 }
 
 export const multiParamUpdate: Fixture = {
+  dialects: ['postgresql', 'sqlite'],
   schemaSql: multiParamInsert.schemaSql,
   schema: multiParamInsert.schema,
   sql: `
@@ -417,6 +428,7 @@ export const multiParamUpdate: Fixture = {
 }
 
 export const multiParamDelete: Fixture = {
+  dialects: ['postgresql', 'sqlite'],
   schemaSql:
     'CREATE TABLE orders (order_id SERIAL PRIMARY KEY, order_date DATE, status TEXT);',
   schema: {
@@ -451,6 +463,7 @@ export const multiParamDelete: Fixture = {
 }
 
 export const nestedSubqueryWithWindow: Fixture = {
+  dialects: ['postgresql', 'sqlite'],
   schemaSql: `
   CREATE TABLE products (product_id SERIAL PRIMARY KEY, name TEXT, category TEXT);
   CREATE TABLE sales (sale_id SERIAL PRIMARY KEY, product_id INTEGER REFERENCES products(product_id), sale_date DATE, revenue DECIMAL);
@@ -533,6 +546,7 @@ export const nestedSubqueryWithWindow: Fixture = {
 }
 
 export const complexInsert: Fixture = {
+  dialects: ['postgresql', 'sqlite'],
   schemaSql: `
   CREATE TABLE employees (employee_id SERIAL PRIMARY KEY, name TEXT, department TEXT, salary DECIMAL);
   CREATE TABLE bonuses (employee_id INTEGER REFERENCES employees(employee_id), bonus DECIMAL);
@@ -583,6 +597,7 @@ export const complexInsert: Fixture = {
 }
 
 export const migrateAndCast: Fixture = {
+  dialects: ['postgresql'],
   schemaSql: `
   CREATE TABLE employees (employee_id SERIAL PRIMARY KEY, name TEXT, department TEXT, salary DECIMAL);
   ALTER TABLE employees

@@ -3,7 +3,7 @@ import { readFileSync, writeFileSync } from 'fs'
 import { parse } from 'path'
 import { parseSchema, parseStatement } from '../../packages/parser'
 import { Schema } from 'model'
-import { generate } from '../../packages/codegen/src/codegen'
+import { generateRaw, generateStatement } from 'codegen'
 import yargs from 'yargs'
 import { globSync } from 'glob'
 
@@ -111,19 +111,21 @@ function run(args: Arguments) {
     if (schema === undefined) {
       return
     }
+    const { name } = parse(file)
+    const sql = readFileSync(file).toString()
+    let code
     try {
-      const { name } = parse(file)
-      const sql = readFileSync(file).toString()
       const statement = parseStatement(sql, schema)
-      const code = generate(name, sql, statement)
-      const codeFilename = file.substring(0, file.lastIndexOf('.')) + '.ts'
-      writeFileSync(codeFilename, code)
+      code = generateStatement(name, sql, statement)
     } catch (e) {
       if (e instanceof Error) {
+        code = generateRaw(name, sql)
         console.error('error during sql file generation', file, e.message)
       } else {
         throw e
       }
     }
+    const codeFilename = file.substring(0, file.lastIndexOf('.')) + '.ts'
+    writeFileSync(codeFilename, code)
   }
 }
