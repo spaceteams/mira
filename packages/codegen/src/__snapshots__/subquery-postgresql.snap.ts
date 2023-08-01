@@ -9,5 +9,5 @@ export function subquery(whereGradeGt: number, client?: Client) {
     return (client || Client).execute<{
         name: string;
         major: string;
-    }>({ sql, values: [whereGradeGt] as const });
+    }>({ name: "subquery", sql, values: [whereGradeGt] as const });
 }

@@ -14,17 +14,27 @@ export class Client {
   }
 
   async executeVoid(statement: BoundStatement): Promise<void> {
-    await this.runSql(statement.sql, ...statement.values)
+    await this.client.query({
+      name: statement.name,
+      text: statement.sql,
+      values: statement.values as unknown[],
+    })
   }
-  execute<T extends QueryResultRow>(statement: BoundStatement): Promise<T[]> {
-    return this.runSql(statement.sql, ...statement.values)
+  async execute<T extends QueryResultRow>(
+    statement: BoundStatement,
+  ): Promise<T[]> {
+    const response = await this.client.query<T>({
+      name: statement.name,
+      text: statement.sql,
+      values: statement.values as unknown[],
+    })
+    return response.rows
   }
 
-  async runSql<T extends QueryResultRow>(
+  runSql<T extends QueryResultRow>(
     sql: string,
-    ...params: readonly unknown[]
+    ...values: readonly unknown[]
   ): Promise<T[]> {
-    const response = await this.client.query<T>(sql, params as unknown[])
-    return response.rows
+    return this.execute({ values, sql })
   }
 }

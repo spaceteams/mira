@@ -5,5 +5,5 @@ export function partialStar(client?: Client) {
         order_id: number;
         product: string;
         quantity: number;
-    }>({ sql, values: [] as const });
+    }>({ name: "partialStar", sql, values: [] as const });
 }

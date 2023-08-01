@@ -10,5 +10,5 @@ export function joinAndAggregate(whereQuantityGt: number, client?: Client) {
     return (client || Client).execute<{
         product: string;
         total_price: number;
-    }>({ sql, values: [whereQuantityGt] as const });
+    }>({ name: "joinAndAggregate", sql, values: [whereQuantityGt] as const });
 }

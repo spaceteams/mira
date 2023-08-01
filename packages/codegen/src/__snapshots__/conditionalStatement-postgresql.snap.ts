@@ -12,5 +12,5 @@ export function conditionalStatement(whereSalaryGt: number, client?: Client) {
     return (client || Client).execute<{
         name: string;
         adjusted_salary: number;
-    }>({ sql, values: [whereSalaryGt] as const });
+    }>({ name: "conditionalStatement", sql, values: [whereSalaryGt] as const });
 }

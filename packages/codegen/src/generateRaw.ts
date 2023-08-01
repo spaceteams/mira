@@ -30,6 +30,7 @@ export function generateRaw(
   )
 
   const boundStatement = factory.createObjectLiteralExpression([
+    factory.createPropertyAssignment('name', factory.createStringLiteral(name)),
     factory.createShorthandPropertyAssignment('sql'),
     factory.createShorthandPropertyAssignment('values'),
   ])

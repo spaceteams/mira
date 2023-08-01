@@ -17,5 +17,5 @@ export function nestedSubqueryWithWindow(whereSaleDateBetween1: Date, whereSaleD
         sale_date: Date;
         revenue: number;
         rank: number;
-    }>({ sql, values: [whereSaleDateBetween1, whereSaleDateBetween2, whereRankLte] as const });
+    }>({ name: "nestedSubqueryWithWindow", sql, values: [whereSaleDateBetween1, whereSaleDateBetween2, whereRankLte] as const });
 }

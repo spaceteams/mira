@@ -1,24 +1,25 @@
 import { BoundStatement } from 'model'
-import { db } from './db'
+import { prepare } from './db'
 
 export class Client {
   public constructor() {}
 
-  static executeVoid<T>(statement: BoundStatement): Promise<void> {
+  static executeVoid<T>(statement: BoundStatement): void {
     return new Client().executeVoid(statement)
   }
-  static execute<T>(statement: BoundStatement): Promise<T[]> {
+  static execute<T>(statement: BoundStatement): T[] {
     return new Client().execute(statement)
   }
 
-  executeVoid(statement: BoundStatement): Promise<void> {
-    const prepared = db.prepare(statement.sql)
-    prepared.run(this.buildParams(statement))
-    return Promise.resolve()
+  executeVoid(statement: BoundStatement): void {
+    const stmt = prepare(statement)
+    const params = this.buildParams(statement)
+    stmt.run(params)
   }
-  execute<T>(statement: BoundStatement): Promise<T[]> {
-    const prepared = db.prepare(statement.sql)
-    return Promise.resolve(prepared.all(this.buildParams(statement)) as T[])
+  execute<T>(statement: BoundStatement): T[] {
+    const stmt = prepare(statement)
+    const params = this.buildParams(statement)
+    return stmt.all(params) as T[]
   }
 
   private buildParams(statement: BoundStatement) {

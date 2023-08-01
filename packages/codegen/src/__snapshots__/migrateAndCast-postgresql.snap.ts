@@ -9,5 +9,5 @@ export function migrateAndCast(client?: Client) {
     return (client || Client).execute<{
         salary_int: number;
         rating_text: string;
-    }>({ sql, values: [] as const });
+    }>({ name: "migrateAndCast", sql, values: [] as const });
 }

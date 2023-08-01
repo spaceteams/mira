@@ -92,6 +92,7 @@ export function generate(
     : 'execute'
 
   const boundStatement = factory.createObjectLiteralExpression([
+    factory.createPropertyAssignment('name', factory.createStringLiteral(name)),
     factory.createShorthandPropertyAssignment('sql'),
     factory.createPropertyAssignment(
       'values',

@@ -13,5 +13,5 @@ export function windowFunctions(whereSaleDateBetween1: Date, whereSaleDateBetwee
         amount: number;
         prev_sale_amount: number;
         cumulative_amount: number;
-    }>({ sql, values: [whereSaleDateBetween1, whereSaleDateBetween2] as const });
+    }>({ name: "windowFunctions", sql, values: [whereSaleDateBetween1, whereSaleDateBetween2] as const });
 }

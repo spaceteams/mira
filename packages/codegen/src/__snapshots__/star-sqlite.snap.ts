@@ -5,5 +5,5 @@ export function star(client?: Client) {
         order_id: number;
         product: string;
         quantity: number;
-    }>({ sql, values: [] as const });
+    }>({ name: "star", sql, values: [] as const });
 }

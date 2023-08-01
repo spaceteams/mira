@@ -14,5 +14,5 @@ export function cte(whereRankNumLte: number, client?: Client) {
         product: string;
         order_date: Date;
         quantity: number;
-    }>({ sql, values: [whereRankNumLte] as const });
+    }>({ name: "cte", sql, values: [whereRankNumLte] as const });
 }

@@ -6,5 +6,5 @@ export function complexInsert(salaryMul: number, whereDepartmentEq: string, clie
   FROM employees
   WHERE department = $2;
   `;
-    return (client || Client).executeVoid({ sql, values: [salaryMul, whereDepartmentEq] as const });
+    return (client || Client).executeVoid({ name: "complexInsert", sql, values: [salaryMul, whereDepartmentEq] as const });
 }
