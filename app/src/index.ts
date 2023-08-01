@@ -13,40 +13,38 @@ async function parseArgumentsAndRun() {
     .option('sql', {
       alias: 's',
       type: 'string',
-      description:
-        'The glob pattern to the sql files (the statements that your code uses)',
+      description: 'sql files glob pattern',
       demandOption: true,
     })
     .option('migrations', {
       alias: 'm',
       type: 'string',
-      description:
-        'The glob pattern to the migrations files (the schema files that are used for type inference)',
+      description: 'migration files glob pattern',
       demandOption: true,
     })
     .option('watch', {
       alias: 'w',
       type: 'boolean',
-      description: 'Run in watch mode',
+      description: 'watch mode',
       default: false,
     })
     .option('verbose', {
       alias: 'v',
       type: 'boolean',
-      description: 'Log more info',
+      description: 'more log messages',
       default: false,
+    })
+    .option('client', {
+      alias: 'c',
+      type: 'string',
+      description: 'custom client library',
     })
     .option('dialect', {
       alias: 'd',
       type: 'string',
       choices: ['postgresql', 'sqlite'],
-      description: 'The SQL Dialect to use',
+      description: 'sql dialect target',
       default: 'postgresql',
-    })
-    .option('client', {
-      alias: 'c',
-      type: 'string',
-      description: 'Use your own client library instead of the packaged',
     })
     .parse()
 
