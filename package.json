@@ -1,5 +1,5 @@
 {
-  "name": "sql-node-delight",
+  "name": "lyra-sql",
   "version": "0.0.1",
   "description": "generate typesafe typescript apis from sql statements",
   "main": "index.js",

@@ -1,5 +1,5 @@
 {
-  description = "spacesql";
+  description = "lyra-sql";
 
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-21.11";
   inputs.master.url = "github:NixOS/nixpkgs/master";

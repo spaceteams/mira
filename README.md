@@ -1,3 +1,3 @@
-# SQLNodeDelight 😌
+# Lyra SQL
 
 write some README...
