@@ -3,7 +3,7 @@ import { readFileSync, writeFileSync } from 'fs'
 import { parse } from 'path'
 import { parseSchema, parseStatement } from '../../packages/parser'
 import { Schema } from 'model'
-import { generateRaw, generateStatement } from 'codegen'
+import { generate, generateRaw } from 'codegen'
 import yargs from 'yargs'
 import { globSync } from 'glob'
 
@@ -36,6 +36,18 @@ async function parseArgumentsAndRun() {
       description: 'Log more info',
       default: false,
     })
+    .option('dialect', {
+      alias: 'd',
+      type: 'string',
+      choices: ['postgresql', 'sqlite'],
+      description: 'The SQL Dialect to use',
+      default: 'postgresql',
+    })
+    .option('client', {
+      alias: 'c',
+      type: 'string',
+      description: 'Use your own client library instead of the packaged',
+    })
     .parse()
 
   run(args)
@@ -47,6 +59,8 @@ type Arguments = {
   migrations: string
   watch: boolean
   verbose: boolean
+  dialect: string
+  client?: string
 }
 function run(args: Arguments) {
   regenerateAllStatements()
@@ -116,10 +130,10 @@ function run(args: Arguments) {
     let code
     try {
       const statement = parseStatement(sql, schema)
-      code = generateStatement(name, sql, statement)
+      code = generate(name, sql, statement, args.dialect, args.client)
     } catch (e) {
       if (e instanceof Error) {
-        code = generateRaw(name, sql)
+        code = generateRaw(name, sql, args.dialect, args.client)
         console.error('error during sql file generation', file, e.message)
       } else {
         throw e

@@ -1,5 +1,5 @@
 import { allRegressionCases } from 'model/src/fixtures'
-import { generate } from './generateStatement'
+import { generate } from './generate'
 
 describe('generate', () => {
   test.each(allRegressionCases)('%s', (name, fixture) => {

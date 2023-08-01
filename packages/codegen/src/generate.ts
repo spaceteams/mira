@@ -70,6 +70,7 @@ export function generate(
   sql: string,
   statement: Statement,
   dialect: string,
+  client?: string,
 ): string {
   const variables = normalizeVariables(statement.variables)
 
@@ -181,7 +182,7 @@ export function generate(
         ),
       ]),
     ),
-    factory.createStringLiteral(`${dialect}-client`),
+    factory.createStringLiteral(client ?? `${dialect}-client`),
   )
 
   const file = factory.updateSourceFile(

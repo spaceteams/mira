@@ -1,2 +1,2 @@
-export * from './generateStatement'
+export * from './generate'
 export * from './generateRaw'

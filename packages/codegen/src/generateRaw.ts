@@ -13,6 +13,7 @@ export function generateRaw(
   name: string,
   sql: string,
   dialect: string,
+  client?: string,
 ): string {
   const sqlVariable = factory.createVariableStatement(
     undefined,
@@ -96,7 +97,7 @@ export function generateRaw(
         ),
       ]),
     ),
-    factory.createStringLiteral(`${dialect}-client`),
+    factory.createStringLiteral(client ?? `${dialect}-client`),
   )
 
   const file = factory.updateSourceFile(
