@@ -10,16 +10,16 @@ export type Fixture = {
 }
 
 export const simple: Fixture = {
-  dialects: ['postgresql', 'sqlite'],
+  dialects: ['postgresql', 'sqlite', 'mysql', 'mariadb'],
   schemaSql:
-    'CREATE TABLE employees (id SERIAL PRIMARY KEY, name TEXT, age INTEGER);',
+    'CREATE TABLE employees (id INT PRIMARY KEY, name TEXT, age INTEGER);',
   schema: {
     tables: [
       {
         name: 'employees',
         columnNames: ['id', 'name', 'age'],
         columns: {
-          id: { type: 'SERIAL' },
+          id: { type: 'INT' },
           name: { type: 'TEXT' },
           age: { type: 'INTEGER' },
         },
@@ -45,10 +45,10 @@ export const simple: Fixture = {
 }
 
 export const joinAndAggregate: Fixture = {
-  dialects: ['postgresql', 'sqlite'],
+  dialects: ['postgresql', 'mysql', 'mariadb'],
   schemaSql: `
-    CREATE TABLE orders (order_id SERIAL PRIMARY KEY, product TEXT, quantity INTEGER);
-    CREATE TABLE order_details (order_id INTEGER REFERENCES orders(order_id), price DECIMAL);
+    CREATE TABLE orders (order_id INT PRIMARY KEY, product TEXT, quantity INTEGER);
+    CREATE TABLE order_details (order_id INTEGER, price DECIMAL);
   `,
   schema: {
     tables: [
@@ -56,7 +56,7 @@ export const joinAndAggregate: Fixture = {
         name: 'orders',
         columnNames: ['order_id', 'product', 'quantity'],
         columns: {
-          order_id: { type: 'SERIAL' },
+          order_id: { type: 'INT' },
           product: { type: 'TEXT' },
           quantity: { type: 'INTEGER' },
         },
@@ -100,7 +100,7 @@ export const joinAndAggregate: Fixture = {
 }
 
 export const star: Fixture = {
-  dialects: ['postgresql', 'sqlite'],
+  dialects: ['postgresql', 'sqlite', 'mysql', 'mariadb'],
   schemaSql: joinAndAggregate.schemaSql,
   schema: joinAndAggregate.schema,
   sql: 'SELECT * FROM orders',
@@ -108,7 +108,7 @@ export const star: Fixture = {
     columns: [
       {
         name: 'order_id',
-        dataType: { type: 'SERIAL' },
+        dataType: { type: 'INT' },
       },
       {
         name: 'product',
@@ -124,16 +124,15 @@ export const star: Fixture = {
 }
 
 export const partialStar: Fixture = {
-  dialects: ['postgresql', 'sqlite'],
+  dialects: ['postgresql', 'sqlite', 'mysql', 'mariadb'],
   schemaSql: joinAndAggregate.schemaSql,
   schema: joinAndAggregate.schema,
-  sql:
-    'SELECT o.* FROM orders o JOIN order_details od ON o.order_id = od.order_id',
+  sql: 'SELECT o.* FROM orders o JOIN order_details od ON o.order_id = od.order_id',
   statement: {
     columns: [
       {
         name: 'order_id',
-        dataType: { type: 'SERIAL' },
+        dataType: { type: 'INT' },
       },
       {
         name: 'product',
@@ -149,10 +148,10 @@ export const partialStar: Fixture = {
 }
 
 export const subquery: Fixture = {
-  dialects: ['postgresql', 'sqlite'],
+  dialects: ['postgresql', 'sqlite', 'mysql', 'mariadb'],
   schemaSql: `
-    CREATE TABLE students (student_id SERIAL PRIMARY KEY, name TEXT, major TEXT);
-    CREATE TABLE grades (student_id INTEGER REFERENCES students(student_id), grade DECIMAL);
+    CREATE TABLE students (student_id INT PRIMARY KEY, name TEXT, major TEXT);
+    CREATE TABLE grades (student_id INTEGER, grade DECIMAL);
   `,
   schema: {
     tables: [
@@ -160,7 +159,7 @@ export const subquery: Fixture = {
         name: 'students',
         columnNames: ['student_id', 'name', 'major'],
         columns: {
-          student_id: { type: 'SERIAL' },
+          student_id: { type: 'INT' },
           name: { type: 'TEXT' },
           major: { type: 'TEXT' },
         },
@@ -203,16 +202,16 @@ export const subquery: Fixture = {
 }
 
 export const conditionalStatement: Fixture = {
-  dialects: ['postgresql', 'sqlite'],
+  dialects: ['postgresql', 'sqlite', 'mysql', 'mariadb'],
   schemaSql:
-    'CREATE TABLE employees (id SERIAL PRIMARY KEY, name TEXT, department TEXT, salary DECIMAL);',
+    'CREATE TABLE employees (id INT PRIMARY KEY, name TEXT, department TEXT, salary DECIMAL);',
   schema: {
     tables: [
       {
         name: 'employees',
         columnNames: ['id', 'name', 'department', 'salary'],
         columns: {
-          id: { type: 'SERIAL' },
+          id: { type: 'INT' },
           name: { type: 'TEXT' },
           department: { type: 'TEXT' },
           salary: { type: 'DECIMAL' },
@@ -251,16 +250,16 @@ export const conditionalStatement: Fixture = {
 }
 
 export const cte: Fixture = {
-  dialects: ['postgresql', 'sqlite'],
+  dialects: ['postgresql', 'sqlite', 'mysql', 'mariadb'],
   schemaSql:
-    'CREATE TABLE orders (order_id SERIAL PRIMARY KEY, product TEXT, order_date DATE, quantity INTEGER);',
+    'CREATE TABLE orders (order_id INT PRIMARY KEY, product TEXT, order_date DATE, quantity INTEGER);',
   schema: {
     tables: [
       {
         name: 'orders',
         columnNames: ['order_id', 'product', 'order_date', 'quantity'],
         columns: {
-          order_id: { type: 'SERIAL' },
+          order_id: { type: 'INT' },
           product: { type: 'TEXT' },
           order_date: { type: 'DATE' },
           quantity: { type: 'INTEGER' },
@@ -304,16 +303,16 @@ export const cte: Fixture = {
 }
 
 export const windowFunctions: Fixture = {
-  dialects: ['postgresql', 'sqlite'],
+  dialects: ['postgresql', 'mysql', 'mariadb'],
   schemaSql:
-    'CREATE TABLE sales (sale_id SERIAL PRIMARY KEY, product TEXT, sale_date DATE, amount DECIMAL);',
+    'CREATE TABLE sales (sale_id INT PRIMARY KEY, product TEXT, sale_date DATE, amount DECIMAL);',
   schema: {
     tables: [
       {
         name: 'sales',
         columnNames: ['sale_id', 'product', 'sale_date', 'amount'],
         columns: {
-          sale_id: { type: 'SERIAL' },
+          sale_id: { type: 'INT' },
           product: { type: 'TEXT' },
           sale_date: { type: 'DATE' },
           amount: { type: 'DECIMAL' },
@@ -367,16 +366,16 @@ export const windowFunctions: Fixture = {
 }
 
 export const multiParamInsert: Fixture = {
-  dialects: ['postgresql', 'sqlite'],
+  dialects: ['postgresql', 'sqlite', 'mysql', 'mariadb'],
   schemaSql:
-    'CREATE TABLE customers (customer_id SERIAL PRIMARY KEY, name TEXT, points INTEGER)',
+    'CREATE TABLE customers (customer_id INT PRIMARY KEY, name TEXT, points INTEGER)',
   schema: {
     tables: [
       {
         name: 'customers',
         columnNames: ['customer_id', 'name', 'points'],
         columns: {
-          customer_id: { type: 'SERIAL' },
+          customer_id: { type: 'INT' },
           name: { type: 'TEXT' },
           points: { type: 'INTEGER' },
         },
@@ -403,8 +402,52 @@ export const multiParamInsert: Fixture = {
   },
 }
 
+export const insertOnConflictUpdate: Fixture = {
+  dialects: ['postgresql'],
+  schemaSql:
+    'CREATE TABLE customers (customer_id SERIAL PRIMARY KEY, name TEXT, points INTEGER)',
+  schema: {
+    tables: [
+      {
+        name: 'customers',
+        columnNames: ['customer_id', 'name', 'points'],
+        columns: {
+          customer_id: { type: 'SERIAL' },
+          name: { type: 'TEXT' },
+          points: { type: 'INTEGER' },
+        },
+      },
+    ],
+  },
+  sql: `
+    INSERT INTO customers (customer_id, name) VALUES ($1, $2)
+    ON CONFLICT (customer_id) DO
+      UPDATE SET name = $3;
+  `,
+  statement: {
+    columns: [],
+    variables: [
+      {
+        name: 'customerId',
+        dataType: { type: 'SERIAL' },
+        position: 0,
+      },
+      {
+        name: 'name',
+        dataType: { type: 'TEXT' },
+        position: 1,
+      },
+      {
+        name: 'onConflictSetName',
+        dataType: { type: 'TEXT' },
+        position: 2,
+      },
+    ],
+  },
+}
+
 export const multiParamUpdate: Fixture = {
-  dialects: ['postgresql', 'sqlite'],
+  dialects: ['postgresql', 'sqlite', 'mysql', 'mariadb'],
   schemaSql: multiParamInsert.schemaSql,
   schema: multiParamInsert.schema,
   sql: `
@@ -428,16 +471,16 @@ export const multiParamUpdate: Fixture = {
 }
 
 export const multiParamDelete: Fixture = {
-  dialects: ['postgresql', 'sqlite'],
+  dialects: ['postgresql', 'sqlite', 'mysql'],
   schemaSql:
-    'CREATE TABLE orders (order_id SERIAL PRIMARY KEY, order_date DATE, status TEXT);',
+    'CREATE TABLE orders (order_id INT PRIMARY KEY, order_date DATE, status TEXT);',
   schema: {
     tables: [
       {
         name: 'orders',
         columnNames: ['order_id', 'order_date', 'status'],
         columns: {
-          order_id: { type: 'SERIAL' },
+          order_id: { type: 'INT' },
           order_date: { type: 'DATE' },
           status: { type: 'TEXT' },
         },
@@ -463,10 +506,10 @@ export const multiParamDelete: Fixture = {
 }
 
 export const nestedSubqueryWithWindow: Fixture = {
-  dialects: ['postgresql', 'sqlite'],
+  dialects: ['postgresql', 'sqlite', 'mysql', 'mariadb'],
   schemaSql: `
-  CREATE TABLE products (product_id SERIAL PRIMARY KEY, name TEXT, category TEXT);
-  CREATE TABLE sales (sale_id SERIAL PRIMARY KEY, product_id INTEGER REFERENCES products(product_id), sale_date DATE, revenue DECIMAL);
+  CREATE TABLE products (product_id INT PRIMARY KEY, name TEXT, category TEXT);
+  CREATE TABLE sales (sale_id INT PRIMARY KEY, product_id INTEGER, sale_date DATE, revenue DECIMAL);
   `,
   schema: {
     tables: [
@@ -474,7 +517,7 @@ export const nestedSubqueryWithWindow: Fixture = {
         name: 'products',
         columnNames: ['product_id', 'name', 'category'],
         columns: {
-          product_id: { type: 'SERIAL' },
+          product_id: { type: 'INT' },
           name: { type: 'TEXT' },
           category: { type: 'TEXT' },
         },
@@ -483,7 +526,7 @@ export const nestedSubqueryWithWindow: Fixture = {
         name: 'sales',
         columnNames: ['sale_id', 'product_id', 'sale_date', 'revenue'],
         columns: {
-          sale_id: { type: 'SERIAL' },
+          sale_id: { type: 'INT' },
           product_id: { type: 'INTEGER' },
           sale_date: { type: 'DATE' },
           revenue: { type: 'DECIMAL' },
@@ -493,14 +536,14 @@ export const nestedSubqueryWithWindow: Fixture = {
   },
   sql: `
   SELECT name, category, sale_date, revenue,
-    RANK() OVER (PARTITION BY category ORDER BY revenue DESC) AS rank
+    RANK() OVER (PARTITION BY category ORDER BY revenue DESC) AS rank_num
   FROM (
       SELECT p.name, p.category, s.sale_date, s.revenue
       FROM products p
       JOIN sales s ON p.product_id = s.product_id
       WHERE s.sale_date BETWEEN $1 AND $2
   ) AS subquery
-  WHERE rank <= $3;
+  WHERE rank_num <= $3;
   `,
   statement: {
     columns: [
@@ -521,7 +564,7 @@ export const nestedSubqueryWithWindow: Fixture = {
         dataType: { type: 'DECIMAL' },
       },
       {
-        name: 'rank',
+        name: 'rank_num',
         dataType: { type: 'INTEGER' },
       },
     ],
@@ -537,7 +580,7 @@ export const nestedSubqueryWithWindow: Fixture = {
         position: 1,
       },
       {
-        name: 'whereRankLte',
+        name: 'whereRankNumLte',
         dataType: { type: 'INTEGER' },
         position: 2,
       },
@@ -546,10 +589,10 @@ export const nestedSubqueryWithWindow: Fixture = {
 }
 
 export const complexInsert: Fixture = {
-  dialects: ['postgresql', 'sqlite'],
+  dialects: ['postgresql', 'sqlite', 'mysql', 'mariadb'],
   schemaSql: `
-  CREATE TABLE employees (employee_id SERIAL PRIMARY KEY, name TEXT, department TEXT, salary DECIMAL);
-  CREATE TABLE bonuses (employee_id INTEGER REFERENCES employees(employee_id), bonus DECIMAL);
+  CREATE TABLE employees (employee_id INT PRIMARY KEY, name TEXT, department TEXT, salary DECIMAL);
+  CREATE TABLE bonuses (employee_id INTEGER, bonus DECIMAL);
   `,
   schema: {
     tables: [
@@ -557,7 +600,7 @@ export const complexInsert: Fixture = {
         name: 'employees',
         columnNames: ['employee_id', 'name', 'department', 'salary'],
         columns: {
-          employee_id: { type: 'SERIAL' },
+          employee_id: { type: 'INT' },
           name: { type: 'TEXT' },
           department: { type: 'TEXT' },
           salary: { type: 'DECIMAL' },
@@ -599,7 +642,7 @@ export const complexInsert: Fixture = {
 export const migrateAndCast: Fixture = {
   dialects: ['postgresql'],
   schemaSql: `
-  CREATE TABLE employees (employee_id SERIAL PRIMARY KEY, name TEXT, department TEXT, salary DECIMAL);
+  CREATE TABLE employees (employee_id INT PRIMARY KEY, name TEXT, department TEXT, salary DECIMAL);
   ALTER TABLE employees
     ADD rating NUMERIC(19, 2),
     DROP department;
@@ -610,7 +653,7 @@ export const migrateAndCast: Fixture = {
         name: 'employees',
         columnNames: ['employee_id', 'name', 'salary', 'rating'],
         columns: {
-          employee_id: { type: 'SERIAL' },
+          employee_id: { type: 'INT' },
           name: { type: 'TEXT' },
           salary: { type: 'DECIMAL' },
           rating: { type: 'NUMERIC', length: 19, scale: 2 },
@@ -643,6 +686,7 @@ export const allRegressionCases: [string, Fixture][] = [
   ['cte', cte],
   ['windowFunctions', windowFunctions],
   ['multiParamInsert', multiParamInsert],
+  ['insertOnConflictUpdate', insertOnConflictUpdate],
   ['multiParamUpdate', multiParamUpdate],
   ['multiParamDelete', multiParamDelete],
   ['nestedSubqueryWithWindow', nestedSubqueryWithWindow],

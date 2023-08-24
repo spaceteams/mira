@@ -1,5 +1,5 @@
-import { Client } from "sqlite-client";
-export function windowFunctions(whereSaleDateBetween1: Date, whereSaleDateBetween2: Date, client?: Client) {
+import { Client } from "model";
+export function windowFunctions(client: Client, whereSaleDateBetween1: Date, whereSaleDateBetween2: Date) {
     const sql = `
   SELECT product, sale_date, amount,
     LAG(amount) OVER (PARTITION BY product ORDER BY sale_date) AS prev_sale_amount,
@@ -7,7 +7,7 @@ export function windowFunctions(whereSaleDateBetween1: Date, whereSaleDateBetwee
   FROM sales
   WHERE sale_date BETWEEN $1 AND $2;
     `;
-    return (client || Client).execute<{
+    return client.execute<{
         product: string;
         sale_date: Date;
         amount: number;

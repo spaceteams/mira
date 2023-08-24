@@ -1,5 +1,5 @@
-import { Client } from "sqlite-client";
-export function conditionalStatement(whereSalaryGt: number, client?: Client) {
+import { Client } from "model";
+export function conditionalStatement(client: Client, whereSalaryGt: number) {
     const sql = `
         SELECT name,
         CASE
@@ -9,7 +9,7 @@ export function conditionalStatement(whereSalaryGt: number, client?: Client) {
         END AS adjusted_salary
         FROM employees WHERE salary > $1;
     `;
-    return (client || Client).execute<{
+    return client.execute<{
         name: string;
         adjusted_salary: number;
     }>({ name: "conditionalStatement", sql, values: [whereSalaryGt] as const });

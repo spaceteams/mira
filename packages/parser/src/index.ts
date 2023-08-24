@@ -1,2 +1,2 @@
-export * from './schema'
-export * from './statement'
+export { parseSchema } from './schema'
+export { parseStatement } from './statement'

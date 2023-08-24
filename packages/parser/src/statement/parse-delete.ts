@@ -2,7 +2,11 @@ import { Schema, Statement, StatementVariable, TableAlias } from 'model'
 import { Delete } from 'node-sql-parser'
 import { parseWhere } from './parse-where'
 
-export function parseDelete(node: Delete, schema: Schema): Statement {
+export function parseDelete(
+  node: Delete,
+  schema: Schema,
+  tableHint?: string,
+): Statement {
   const aliases = (node.table ?? []) as TableAlias[]
 
   const variables: StatementVariable[] = []

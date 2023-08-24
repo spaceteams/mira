@@ -1,7 +1,7 @@
 import { ColumnRef } from 'node-sql-parser'
 import { parse } from '../parser'
 import { safeArray } from '../safe-array'
-import { DataType, DataTypeSchema, Schema, TableSchema } from 'model'
+import { DataType, DataTypeSchema, Dialect, Schema, TableSchema } from 'model'
 import { From } from 'node-sql-parser'
 
 type DataDefinition = {
@@ -23,8 +23,12 @@ type AlterExpr =
   | { action: 'add'; column: ColumnRef; definition: DataDefinition }
   | { action: 'drop'; column: ColumnRef }
 
-export function parseSchema(sql: string, schema?: Schema | undefined): Schema {
-  const ast = parse(sql)
+export function parseSchema(
+  sql: string,
+  dialect: Dialect,
+  schema?: Schema | undefined,
+): Schema {
+  const ast = parse(sql, dialect)
   let tables: TableSchema[] = [...(schema?.tables ?? [])]
 
   for (const node of safeArray(ast)) {
@@ -69,8 +73,8 @@ export function parseSchema(sql: string, schema?: Schema | undefined): Schema {
             case 'add':
               {
                 const name = expr.column.column
-                table.columns[expr.column.column.toLowerCase()] = DataTypeSchema
-                  .parse({
+                table.columns[expr.column.column.toLowerCase()] =
+                  DataTypeSchema.parse({
                     ...expr.definition,
                     type: expr.definition.dataType,
                   })

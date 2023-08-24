@@ -1,0 +1,17 @@
+{
+  "name": "mariadb-client",
+  "version": "1.0.0",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "vitest",
+    "test:ci": "vitest run",
+    "build": "esbuild src/index.ts --outdir=build --bundle --minify --platform=node"
+  },
+  "dependencies": {
+    "mariadb": "3.2.0",
+    "parser": "file:../../packages/model"
+  },
+  "devDependencies": {
+    "testcontainers": "9.12.0"
+  }
+}

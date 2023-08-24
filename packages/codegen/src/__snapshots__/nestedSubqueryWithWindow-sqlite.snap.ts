@@ -1,21 +1,21 @@
-import { Client } from "sqlite-client";
-export function nestedSubqueryWithWindow(whereSaleDateBetween1: Date, whereSaleDateBetween2: Date, whereRankLte: number, client?: Client) {
+import { Client } from "model";
+export function nestedSubqueryWithWindow(client: Client, whereSaleDateBetween1: Date, whereSaleDateBetween2: Date, whereRankNumLte: number) {
     const sql = `
   SELECT name, category, sale_date, revenue,
-    RANK() OVER (PARTITION BY category ORDER BY revenue DESC) AS rank
+    RANK() OVER (PARTITION BY category ORDER BY revenue DESC) AS rank_num
   FROM (
       SELECT p.name, p.category, s.sale_date, s.revenue
       FROM products p
       JOIN sales s ON p.product_id = s.product_id
       WHERE s.sale_date BETWEEN $1 AND $2
   ) AS subquery
-  WHERE rank <= $3;
+  WHERE rank_num <= $3;
   `;
-    return (client || Client).execute<{
+    return client.execute<{
         name: string;
         category: string;
         sale_date: Date;
         revenue: number;
-        rank: number;
-    }>({ name: "nestedSubqueryWithWindow", sql, values: [whereSaleDateBetween1, whereSaleDateBetween2, whereRankLte] as const });
+        rank_num: number;
+    }>({ name: "nestedSubqueryWithWindow", sql, values: [whereSaleDateBetween1, whereSaleDateBetween2, whereRankNumLte] as const });
 }

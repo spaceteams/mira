@@ -1,7 +1,7 @@
-import { Client } from "sqlite-client";
-export function multiParamInsert(name: string, points: number, client?: Client) {
+import { Client } from "model";
+export function multiParamInsert(client: Client, name: string, points: number) {
     const sql = `
     INSERT INTO customers (name, points) VALUES ($1, $2);
   `;
-    return (client || Client).executeVoid({ name: "multiParamInsert", sql, values: [name, points] as const });
+    return client.executeVoid({ name: "multiParamInsert", sql, values: [name, points] as const });
 }

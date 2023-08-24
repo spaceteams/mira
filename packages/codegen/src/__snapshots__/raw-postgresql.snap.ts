@@ -1,5 +1,5 @@
-import { Client } from "postgresql-client";
-export function failed_Sql(values: unknown[], client?: Client) {
+import { AsyncClient } from "model";
+export function failed_Sql(client: Client, ...values: unknown[]) {
     const sql = `what a mess!`;
-    return (client || Client).execute({ name: "failed-Sql", sql, values });
+    return client.execute({ name: "failed-Sql", sql, values });
 }

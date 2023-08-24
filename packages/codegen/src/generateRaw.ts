@@ -13,8 +13,9 @@ export function generateRaw(
   name: string,
   sql: string,
   dialect: string,
-  client?: string,
+  useAsync?: boolean,
 ): string {
+  const isAsync = useAsync ?? dialect === 'sqlite' ? false : true
   const sqlVariable = factory.createVariableStatement(
     undefined,
     factory.createVariableDeclarationList(
@@ -42,12 +43,7 @@ export function generateRaw(
       factory.createReturnStatement(
         factory.createCallExpression(
           factory.createPropertyAccessExpression(
-            factory.createParenthesizedExpression(
-              factory.createLogicalOr(
-                factory.createIdentifier('client'),
-                factory.createIdentifier('Client'),
-              ),
-            ),
+            factory.createIdentifier('client'),
             'execute',
           ),
           undefined,
@@ -66,18 +62,18 @@ export function generateRaw(
       factory.createParameterDeclaration(
         undefined,
         undefined,
+        'client',
+        undefined,
+        factory.createTypeReferenceNode('Client'),
+      ),
+      factory.createParameterDeclaration(
+        undefined,
+        factory.createToken(SyntaxKind.DotDotDotToken),
         'values',
         undefined,
         factory.createArrayTypeNode(
           factory.createKeywordTypeNode(SyntaxKind.UnknownKeyword),
         ),
-      ),
-      factory.createParameterDeclaration(
-        undefined,
-        undefined,
-        'client',
-        factory.createToken(SyntaxKind.QuestionToken),
-        factory.createTypeReferenceNode('Client'),
       ),
     ],
     undefined,
@@ -93,11 +89,11 @@ export function generateRaw(
         factory.createImportSpecifier(
           false,
           undefined,
-          factory.createIdentifier('Client'),
+          factory.createIdentifier(isAsync ? 'AsyncClient' : 'Client'),
         ),
       ]),
     ),
-    factory.createStringLiteral(client ?? `${dialect}-client`),
+    factory.createStringLiteral('model'),
   )
 
   const file = factory.updateSourceFile(

@@ -1,5 +1,5 @@
-import { Client } from "sqlite-client";
-export function joinAndAggregate(whereQuantityGt: number, client?: Client) {
+import { Client } from "model";
+export function joinAndAggregate(client: Client, whereQuantityGt: number) {
     const sql = `
     SELECT o.product, SUM(od.price) AS total_price
     FROM orders o
@@ -7,7 +7,7 @@ export function joinAndAggregate(whereQuantityGt: number, client?: Client) {
     WHERE o.quantity > $1
     GROUP BY o.product;
 `;
-    return (client || Client).execute<{
+    return client.execute<{
         product: string;
         total_price: number;
     }>({ name: "joinAndAggregate", sql, values: [whereQuantityGt] as const });

@@ -1,0 +1,17 @@
+{
+  "name": "sqlite-client",
+  "version": "1.0.0",
+  "main": "build/index.js",
+  "scripts": {
+    "test": "vitest",
+    "test:ci": "vitest run",
+    "build": "esbuild src/index.ts --outdir=build --bundle --minify --platform=node"
+  },
+  "dependencies": {
+    "better-sqlite3": "8.5.0",
+    "parser": "file:../../packages/model"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "7.6.4"
+  }
+}

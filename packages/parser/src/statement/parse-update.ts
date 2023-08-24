@@ -9,15 +9,21 @@ import { Update } from 'node-sql-parser'
 import { parseWhere } from './parse-where'
 import { Value } from './value'
 import { BinaryExpression, extractVariables } from './binary-expression'
+import { capitalize } from './capitalize'
 
-export function parseUpdate(node: Update, schema: Schema): Statement {
+export function parseUpdate(
+  node: Update,
+  schema: Schema,
+  tableHint?: string,
+): Statement {
   const aliases = (node.table ?? []) as TableAlias[]
   const variables: StatementVariable[] = []
   for (const set of node.set) {
     const value = set.value as Value | BinaryExpression
     if (value.type === 'origin' || value.type === 'var') {
+      console.log(set, schema.tables, set.table ?? tableHint)
       const columnType = findColumnFromAliasesType(
-        set.table,
+        set.table ?? tableHint,
         set.column,
         schema,
         aliases,
@@ -26,7 +32,7 @@ export function parseUpdate(node: Update, schema: Schema): Statement {
       }
       variables.push({
         position: value.type === 'var' ? value.name - 1 : variables.length,
-        name: set.column,
+        name: capitalize(`set_${set.column}`),
         dataType: columnType,
       })
     } else if (value.type === 'binary_expr') {

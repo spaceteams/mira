@@ -1,7 +1,7 @@
-import { Client } from "sqlite-client";
-export function star(client?: Client) {
+import { Client } from "model";
+export function star(client: Client) {
     const sql = `SELECT * FROM orders`;
-    return (client || Client).execute<{
+    return client.execute<{
         order_id: number;
         product: string;
         quantity: number;

@@ -70,8 +70,9 @@ export function generate(
   sql: string,
   statement: Statement,
   dialect: string,
-  client?: string,
+  useAsync?: boolean,
 ): string {
+  const isAsync = useAsync ?? dialect === 'sqlite' ? false : true
   const variables = normalizeVariables(statement.variables)
 
   const sqlVariable = factory.createVariableStatement(
@@ -88,9 +89,8 @@ export function generate(
       NodeFlags.Const,
     ),
   )
-  const executeVariant = statement.columns.length === 0
-    ? 'executeVoid'
-    : 'execute'
+  const executeVariant =
+    statement.columns.length === 0 ? 'executeVoid' : 'execute'
 
   const boundStatement = factory.createObjectLiteralExpression([
     factory.createPropertyAssignment('name', factory.createStringLiteral(name)),
@@ -121,18 +121,15 @@ export function generate(
     ) as unknown as TypeElement[],
   )
 
+  const clientType = isAsync ? 'AsyncClient' : 'Client'
+
   const body = factory.createBlock(
     [
       sqlVariable,
       factory.createReturnStatement(
         factory.createCallExpression(
           factory.createPropertyAccessExpression(
-            factory.createParenthesizedExpression(
-              factory.createLogicalOr(
-                factory.createIdentifier('client'),
-                factory.createIdentifier('Client'),
-              ),
-            ),
+            factory.createIdentifier('client'),
             executeVariant,
           ),
           statement.columns.length > 0 ? [objectLiteral] : undefined,
@@ -148,6 +145,13 @@ export function generate(
     name.replace('-', '_'),
     [],
     [
+      factory.createParameterDeclaration(
+        undefined,
+        undefined,
+        'client',
+        undefined,
+        factory.createTypeReferenceNode(clientType),
+      ),
       ...variables.map(({ name, dataType }) =>
         factory.createParameterDeclaration(
           undefined,
@@ -155,14 +159,7 @@ export function generate(
           name,
           undefined,
           dataTypeToTsType(dataType),
-        )
-      ),
-      factory.createParameterDeclaration(
-        undefined,
-        undefined,
-        'client',
-        factory.createToken(SyntaxKind.QuestionToken),
-        factory.createTypeReferenceNode('Client'),
+        ),
       ),
     ],
     undefined,
@@ -178,11 +175,11 @@ export function generate(
         factory.createImportSpecifier(
           false,
           undefined,
-          factory.createIdentifier('Client'),
+          factory.createIdentifier(clientType),
         ),
       ]),
     ),
-    factory.createStringLiteral(client ?? `${dialect}-client`),
+    factory.createStringLiteral('model'),
   )
 
   const file = factory.updateSourceFile(

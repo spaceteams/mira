@@ -9,13 +9,7 @@ import {
   TableAlias,
 } from 'model'
 import { parseNode } from './parse-node'
-
-function capitalize(v: string): string {
-  return v
-    .split('_')
-    .map((s, i) => (i === 0 ? s : s.at(0)?.toUpperCase() + s.slice(1)))
-    .join('')
-}
+import { capitalize } from './capitalize'
 
 function operatorStringify(operator: string): string {
   switch (operator) {
@@ -79,9 +73,9 @@ function buildVariable(
   return {
     position: variable.type === 'origin' ? offset : variable.name - 1,
     name: capitalize(
-      `${prefix}${prefix.length > 0 ? '_' : ''}${column.column}${
-        operatorStringify(operator)
-      }`,
+      `${prefix}${prefix.length > 0 ? '_' : ''}${
+        column.column
+      }${operatorStringify(operator)}`,
     ),
     dataType: columnType ?? {
       type: 'UNKNOWN',

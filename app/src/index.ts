@@ -2,7 +2,7 @@ import { watch } from 'chokidar'
 import { readFileSync, writeFileSync } from 'fs'
 import { parse } from 'path'
 import { parseSchema, parseStatement } from '../../packages/parser'
-import { Schema } from 'model'
+import { Dialect, Schema } from 'model'
 import { generate, generateRaw } from 'codegen'
 import yargs from 'yargs'
 import { globSync } from 'glob'
@@ -34,21 +34,21 @@ async function parseArgumentsAndRun() {
       description: 'more log messages',
       default: false,
     })
-    .option('client', {
-      alias: 'c',
-      type: 'string',
-      description: 'custom client library',
+    .option('useAsync', {
+      alias: 'a',
+      type: 'boolean',
+      description: 'use async client (default is dialect based)',
     })
     .option('dialect', {
       alias: 'd',
       type: 'string',
-      choices: ['postgresql', 'sqlite'],
+      choices: ['postgresql', 'sqlite', 'mariadb'],
       description: 'sql dialect target',
       default: 'postgresql',
     })
     .parse()
 
-  run(args)
+  run(args as Arguments)
 }
 parseArgumentsAndRun()
 
@@ -57,8 +57,8 @@ type Arguments = {
   migrations: string
   watch: boolean
   verbose: boolean
-  dialect: string
-  client?: string
+  dialect: Dialect
+  useAsync?: boolean
 }
 function run(args: Arguments) {
   regenerateAllStatements()
@@ -102,7 +102,11 @@ function run(args: Arguments) {
     let schema: Schema | undefined = undefined
     for (const file of files) {
       try {
-        schema = parseSchema(readFileSync(file).toString(), schema)
+        schema = parseSchema(
+          readFileSync(file).toString(),
+          args.dialect,
+          schema,
+        )
       } catch (e) {
         if (e instanceof Error) {
           console.error(`error: ${e.message} in ${file}`)
@@ -127,11 +131,11 @@ function run(args: Arguments) {
     const sql = readFileSync(file).toString()
     let code
     try {
-      const statement = parseStatement(sql, schema)
-      code = generate(name, sql, statement, args.dialect, args.client)
+      const statement = parseStatement(sql, args.dialect, schema)
+      code = generate(name, sql, statement, args.dialect, args.useAsync)
     } catch (e) {
       if (e instanceof Error) {
-        code = generateRaw(name, sql, args.dialect, args.client)
+        code = generateRaw(name, sql, args.dialect, args.useAsync)
         console.error('error during sql file generation', file, e.message)
       } else {
         throw e

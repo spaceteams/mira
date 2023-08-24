@@ -77,5 +77,8 @@ export function findColumnFromAliasesType(
       return t
     }
   }
+  if (tableName) {
+    return getColumnType(tableName, columnName, schema)
+  }
   return undefined
 }

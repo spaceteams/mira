@@ -1,7 +1,7 @@
-import { Client } from "sqlite-client";
-export function simple(whereAgeGt: number, client?: Client) {
+import { Client } from "model";
+export function simple(client: Client, whereAgeGt: number) {
     const sql = `SELECT name FROM employees WHERE age > $1;`;
-    return (client || Client).execute<{
+    return client.execute<{
         name: string;
     }>({ name: "simple", sql, values: [whereAgeGt] as const });
 }

@@ -1,5 +1,5 @@
-import { Client } from "sqlite-client";
-export function cte(whereRankNumLte: number, client?: Client) {
+import { Client } from "model";
+export function cte(client: Client, whereRankNumLte: number) {
     const sql = `
     WITH ranked_orders AS (
         SELECT product, order_date, quantity,
@@ -10,7 +10,7 @@ export function cte(whereRankNumLte: number, client?: Client) {
     FROM ranked_orders
     WHERE rank_num <= $1;
     `;
-    return (client || Client).execute<{
+    return client.execute<{
         product: string;
         order_date: Date;
         quantity: number;

@@ -2,9 +2,9 @@
   "name": "lyra-sql",
   "version": "0.0.1",
   "description": "generate typesafe typescript apis from sql statements",
-  "main": "index.js",
   "workspaces": [
     "app",
+    "clients/*",
     "packages/*"
   ],
   "scripts": {
@@ -13,7 +13,8 @@
     "test": "vitest",
     "test:ci": "vitest run",
     "check": "tsc --noEmit",
-    "build": "esbuild app/src/index.ts --outdir=build --bundle --minify --platform=node"
+    "publish": "npm publish --dry-run --workspace app && npm publish --dry-run --workspace clients",
+    "build": "npm run build --workspace app && npm run build --workspace clients"
   },
   "devDependencies": {
     "esbuild": "0.18.15",

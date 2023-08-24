@@ -6,7 +6,7 @@
     "test:ci": "vitest run"
   },
   "dependencies": {
-    "node-sql-parser": "^4.8.0",
+    "node-sql-parser": "4.9.0",
     "parser": "file:../packages/model"
   }
 }

@@ -5,9 +5,11 @@ import {
   Statement,
   StatementVariable,
 } from 'model'
-import { Insert_Replace } from 'node-sql-parser'
+import { AST, Insert_Replace } from 'node-sql-parser'
 import { Value } from './value'
 import { parseSelect } from './parse-select'
+import { parseNode } from './parse-node'
+import { capitalize } from './capitalize'
 
 function extractFromValues(
   node: Insert_Replace,
@@ -34,7 +36,7 @@ function extractFromValues(
 
       variables.push({
         position: value.type === 'var' ? value.name - 1 : i,
-        name: column,
+        name: capitalize(column),
         dataType: columnType ?? { type: 'UNKNOWN' },
       })
     }
@@ -42,9 +44,17 @@ function extractFromValues(
   return variables
 }
 
+type Conflict = {
+  action: {
+    keyword: 'do'
+    expr: AST
+  }
+}
+
 export function parseInsertReplace(
   node: Insert_Replace,
   schema: Schema,
+  tableHint?: string,
 ): Statement {
   let variables: StatementVariable[] = []
   if (Array.isArray(node.values)) {
@@ -52,6 +62,20 @@ export function parseInsertReplace(
   } else {
     const statement = parseSelect(node.values, schema)
     variables = statement.variables
+  }
+  if ('conflict' in node && node.conflict) {
+    const conflict = node.conflict as Conflict
+    const statement = parseNode(
+      conflict.action.expr,
+      schema,
+      node.table[0].table,
+    )
+    variables.push(
+      ...statement.variables.map((variable) => ({
+        ...variable,
+        name: capitalize(`onConflict_${variable.name}`),
+      })),
+    )
   }
   return {
     columns: [],
