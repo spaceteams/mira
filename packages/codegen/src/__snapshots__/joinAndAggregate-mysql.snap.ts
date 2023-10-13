@@ -1,4 +1,4 @@
-import { AsyncClient } from "model";
+import { AsyncClient } from "@lyra/core";
 export function joinAndAggregate(client: AsyncClient, whereQuantityGt: number) {
     const sql = `
     SELECT o.product, SUM(od.price) AS total_price

@@ -1,4 +1,4 @@
-import { BoundStatement } from 'model'
+import { BoundStatement } from './bound-statement'
 import { ResultRow } from './result-row'
 
 export interface Client {

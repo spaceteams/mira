@@ -7,14 +7,14 @@
     "test": "vitest",
     "test:ci": "vitest run",
     "clean": "rm -rf build dist",
-    "bundle": "rollup -c ../../rollup.config.mjs",
-    "build": "npm run clean && npm run bundle"
+    "build": "rollup -c ../../rollup.config.mjs"
   },
   "dependencies": {
-    "parser": "file:../../packages/model",
+    "@lyra/core": "0.0.1",
     "pg": "8.11.1"
   },
   "devDependencies": {
+    "@lyra/codegen": "0.0.1",
     "@types/pg": "8.10.2",
     "testcontainers": "9.12.0"
   }

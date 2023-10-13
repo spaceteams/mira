@@ -1,4 +1,4 @@
-import { AsyncClient } from "model";
+import { AsyncClient } from "@lyra/core";
 export function windowFunctions(client: AsyncClient, whereSaleDateBetween1: Date, whereSaleDateBetween2: Date) {
     const sql = `
   SELECT product, sale_date, amount,

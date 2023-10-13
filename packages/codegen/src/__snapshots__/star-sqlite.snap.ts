@@ -1,4 +1,4 @@
-import { Client } from "model";
+import { Client } from "@lyra/core";
 export function star(client: Client) {
     const sql = `SELECT * FROM orders`;
     return client.execute<{

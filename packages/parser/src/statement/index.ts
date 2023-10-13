@@ -1,4 +1,4 @@
-import { Dialect, Schema, Statement } from 'model'
+import { Dialect, Schema, Statement } from '@lyra/core'
 import { parse } from '../parser'
 import { parseNode } from './parse-node'
 

@@ -1,4 +1,4 @@
-import { Client } from "model";
+import { Client } from "@lyra/core";
 export function nestedSubqueryWithWindow(client: Client, whereSaleDateBetween1: Date, whereSaleDateBetween2: Date, whereRankNumLte: number) {
     const sql = `
   SELECT name, category, sale_date, revenue,

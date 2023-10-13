@@ -1,4 +1,4 @@
-import { AsyncClient, BoundStatement, ResultRow } from 'model'
+import { AsyncClient, BoundStatement, ResultRow } from '@lyra/core'
 import { Connection } from 'mariadb'
 import { pool } from './pool'
 

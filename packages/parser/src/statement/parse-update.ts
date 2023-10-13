@@ -4,7 +4,7 @@ import {
   Statement,
   StatementVariable,
   TableAlias,
-} from 'model'
+} from '@lyra/core'
 import { Update } from 'node-sql-parser'
 import { parseWhere } from './parse-where'
 import { Value } from './value'

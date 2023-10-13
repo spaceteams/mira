@@ -1,4 +1,4 @@
-import { AsyncClient } from "model";
+import { AsyncClient } from "@lyra/core";
 export function migrateAndCast(client: AsyncClient) {
     const sql = `
   select

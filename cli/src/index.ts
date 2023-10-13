@@ -1,9 +1,9 @@
 import { watch } from 'chokidar'
 import { readFileSync, writeFileSync } from 'fs'
 import { parse } from 'path'
-import { parseSchema, parseStatement } from '../../packages/parser'
-import { Dialect, Schema } from 'model'
-import { generate, generateRaw } from 'codegen'
+import { parseSchema, parseStatement } from '@lyra/parser'
+import { Dialect, Schema } from '@lyra/core'
+import { generate, generateRaw } from '@lyra/codegen'
 import yargs from 'yargs'
 import { globSync } from 'glob'
 

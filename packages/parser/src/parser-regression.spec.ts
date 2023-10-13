@@ -1,7 +1,7 @@
-import { Fixture, allRegressionCases } from 'model/src/fixtures'
+import { allRegressionCases, Fixture } from '@lyra/core/src/fixtures'
+import { Dialect } from '@lyra/core'
 import { parseSchema } from './schema'
 import { parseStatement } from './statement'
-import { Dialect } from 'model'
 
 const allTestsWithDialect = allRegressionCases.flatMap(
   ([name, fixture]) =>

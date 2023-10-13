@@ -1,4 +1,4 @@
-import { Client } from "model";
+import { Client } from "@lyra/core";
 export function complexInsert(client: Client, salaryMul: number, whereDepartmentEq: string) {
     const sql = `
   INSERT INTO bonuses (employee_id, bonus)

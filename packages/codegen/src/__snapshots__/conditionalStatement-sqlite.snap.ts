@@ -1,4 +1,4 @@
-import { Client } from "model";
+import { Client } from "@lyra/core";
 export function conditionalStatement(client: Client, whereSalaryGt: number) {
     const sql = `
         SELECT name,

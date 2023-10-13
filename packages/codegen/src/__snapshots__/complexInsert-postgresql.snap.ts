@@ -1,4 +1,4 @@
-import { AsyncClient } from "model";
+import { AsyncClient } from "@lyra/core";
 export function complexInsert(client: AsyncClient, salaryMul: number, whereDepartmentEq: string) {
     const sql = `
   INSERT INTO bonuses (employee_id, bonus)

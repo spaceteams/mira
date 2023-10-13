@@ -1,4 +1,4 @@
-import { AsyncClient } from "model";
+import { AsyncClient } from "@lyra/core";
 export function conditionalStatement(client: AsyncClient, whereSalaryGt: number) {
     const sql = `
         SELECT name,

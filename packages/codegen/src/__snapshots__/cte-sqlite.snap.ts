@@ -1,4 +1,4 @@
-import { Client } from "model";
+import { Client } from "@lyra/core";
 export function cte(client: Client, whereRankNumLte: number) {
     const sql = `
     WITH ranked_orders AS (

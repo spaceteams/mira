@@ -1,5 +1,5 @@
-import { BoundStatement, Client, ResultRow } from 'model'
-import { run, all } from './db'
+import { BoundStatement, Client, ResultRow } from '@lyra/core'
+import { all, run } from './db'
 
 export class LyraSqliteClient implements Client {
   public constructor() {}

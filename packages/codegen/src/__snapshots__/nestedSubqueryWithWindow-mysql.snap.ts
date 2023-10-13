@@ -1,4 +1,4 @@
-import { AsyncClient } from "model";
+import { AsyncClient } from "@lyra/core";
 export function nestedSubqueryWithWindow(client: AsyncClient, whereSaleDateBetween1: Date, whereSaleDateBetween2: Date, whereRankNumLte: number) {
     const sql = `
   SELECT name, category, sale_date, revenue,

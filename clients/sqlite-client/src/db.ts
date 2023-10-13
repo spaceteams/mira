@@ -1,5 +1,5 @@
 import Database, { Statement } from 'better-sqlite3'
-import { BoundStatement } from 'model'
+import { BoundStatement } from '@lyra/core'
 
 const db = new Database(process.env.SQLITE_FILE ?? ':memory:', {})
 

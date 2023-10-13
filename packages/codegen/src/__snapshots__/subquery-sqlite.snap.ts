@@ -1,4 +1,4 @@
-import { Client } from "model";
+import { Client } from "@lyra/core";
 export function subquery(client: Client, whereGradeGt: number) {
     const sql = `
     SELECT name, major FROM students

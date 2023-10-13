@@ -1,4 +1,4 @@
-import { Client } from "model";
+import { Client } from "@lyra/core";
 export function windowFunctions(client: Client, whereSaleDateBetween1: Date, whereSaleDateBetween2: Date) {
     const sql = `
   SELECT product, sale_date, amount,

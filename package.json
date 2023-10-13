@@ -8,12 +8,13 @@
     "packages/*"
   ],
   "scripts": {
-    "format": "deno fmt",
-    "lint": "deno fmt --check && deno lint",
-    "test": "vitest",
+    "test": "TZ=UTC vitest",
     "test:ci": "vitest run",
-    "build": "npm run build --workspace cli && npm run build --workspace clients",
-    "publish": "npm publish --dry-run --workspace cli && npm publish --dry-run --workspace clients"
+    "clean": "npm run clean -ws",
+    "build:packages": "npm run build --workspace packages/core && npm run build --workspace packages/codegen && npm run build --workspace packages/parser",
+    "build:clients": "npm run build --workspace clients",
+    "build:cli": "npm run build --workspace cli",
+    "build": "npm run clean && npm run build:packages && npm run build:clients && npm run build:cli"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.5",
@@ -21,13 +22,10 @@
     "@rollup/plugin-node-resolve": "^15.2.3",
     "rollup": "^4.0.2",
     "rollup-plugin-typescript2": "^0.36.0",
+    "typescript": "5.1.6",
     "vite": "4.4.4",
     "vitest": "0.33.0"
   },
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "typescript": "5.1.6",
-    "zod": "3.21.4"
-  }
+  "license": "ISC"
 }

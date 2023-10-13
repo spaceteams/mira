@@ -1,4 +1,4 @@
-import { AsyncClient, BoundStatement, ResultRow } from 'model'
+import { AsyncClient, BoundStatement, ResultRow } from '@lyra/core'
 import { ClientBase } from 'pg'
 import { pool } from './pool'
 
