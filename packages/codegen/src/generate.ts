@@ -15,10 +15,10 @@ import {
 
 function dataTypeToTsType(dataType: DataType): TypeNode {
   switch (dataType.type) {
-    case 'SERIAL':
     case 'INTEGER':
-    case 'DECIMAL':
     case 'INT':
+    case 'DECIMAL':
+    case 'SERIAL':
     case 'NUMERIC':
       return factory.createKeywordTypeNode(SyntaxKind.NumberKeyword)
     case 'TEXT':

@@ -161,7 +161,7 @@ function parseFrom(
 export function parseSelect(
   node: Select,
   schema: Schema,
-  tableHint?: string,
+  _tableHint?: string,
 ): Statement {
   const columns: StatementColumn[] = []
 

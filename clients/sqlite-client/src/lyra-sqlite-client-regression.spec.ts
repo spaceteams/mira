@@ -1,12 +1,12 @@
 import { windowFunctions } from '../../../packages/codegen/src/__snapshots__/windowFunctions-sqlite.snap'
 import * as fixtures from 'model/src/fixtures'
 import { withTestClient } from './transactor'
-import { db } from './db'
+import { exec } from './db'
 
 it('window functions', async () => {
   await withTestClient(async (client) => {
-    db.exec(fixtures.windowFunctions.schemaSql)
-    db.exec(`
+    exec(fixtures.windowFunctions.schemaSql)
+    exec(`
     INSERT INTO sales (sale_id, product, sale_date, amount) VALUES
       (0, 'p', '2012-03-01', 3),
       (1, 'p', '2012-03-02', 3),

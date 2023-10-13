@@ -21,7 +21,6 @@ export function parseUpdate(
   for (const set of node.set) {
     const value = set.value as Value | BinaryExpression
     if (value.type === 'origin' || value.type === 'var') {
-      console.log(set, schema.tables, set.table ?? tableHint)
       const columnType = findColumnFromAliasesType(
         set.table ?? tableHint,
         set.column,

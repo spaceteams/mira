@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "generate typesafe typescript apis from sql statements",
   "workspaces": [
-    "app",
+    "cli",
     "clients/*",
     "packages/*"
   ],
@@ -12,20 +12,22 @@
     "lint": "deno fmt --check && deno lint",
     "test": "vitest",
     "test:ci": "vitest run",
-    "check": "tsc --noEmit",
-    "publish": "npm publish --dry-run --workspace app && npm publish --dry-run --workspace clients",
-    "build": "npm run build --workspace app && npm run build --workspace clients"
+    "build": "npm run build --workspace cli && npm run build --workspace clients",
+    "publish": "npm publish --dry-run --workspace cli && npm publish --dry-run --workspace clients"
   },
   "devDependencies": {
-    "esbuild": "0.18.15",
-    "esbuild-node-tsc": "2.0.5",
-    "typescript": "5.1.6",
+    "@rollup/plugin-commonjs": "^25.0.5",
+    "@rollup/plugin-json": "^6.0.1",
+    "@rollup/plugin-node-resolve": "^15.2.3",
+    "rollup": "^4.0.2",
+    "rollup-plugin-typescript2": "^0.36.0",
     "vite": "4.4.4",
     "vitest": "0.33.0"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "zod": "^3.21.4"
+    "typescript": "5.1.6",
+    "zod": "3.21.4"
   }
 }

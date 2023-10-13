@@ -64,7 +64,7 @@ export function generateRaw(
         undefined,
         'client',
         undefined,
-        factory.createTypeReferenceNode('Client'),
+        factory.createTypeReferenceNode(isAsync ? 'AsyncClient' : 'Client'),
       ),
       factory.createParameterDeclaration(
         undefined,

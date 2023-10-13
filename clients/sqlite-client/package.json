@@ -1,11 +1,14 @@
 {
-  "name": "sqlite-client",
-  "version": "1.0.0",
-  "main": "build/index.js",
+  "name": "@lyra/sqlite-client",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "types": "dist/clients/sqlite-client/index.d.ts",
   "scripts": {
     "test": "vitest",
     "test:ci": "vitest run",
-    "build": "esbuild src/index.ts --outdir=build --bundle --minify --platform=node"
+    "clean": "rm -rf build dist",
+    "bundle": "rollup -c ../../rollup.config.mjs",
+    "build": "npm run clean && npm run bundle"
   },
   "dependencies": {
     "better-sqlite3": "8.5.0",

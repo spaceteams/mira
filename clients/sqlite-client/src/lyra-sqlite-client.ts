@@ -1,5 +1,5 @@
 import { BoundStatement, Client, ResultRow } from 'model'
-import { prepare } from './db'
+import { run, all } from './db'
 
 export class LyraSqliteClient implements Client {
   public constructor() {}
@@ -12,14 +12,10 @@ export class LyraSqliteClient implements Client {
   }
 
   executeVoid(statement: BoundStatement): void {
-    const stmt = prepare(statement)
-    const params = this.buildParams(statement)
-    stmt.run(params)
+    run(statement, this.buildParams(statement))
   }
   execute<T extends ResultRow>(statement: BoundStatement): T[] {
-    const stmt = prepare(statement)
-    const params = this.buildParams(statement)
-    return stmt.all(params) as T[]
+    return all(statement, this.buildParams(statement)) as T[]
   }
 
   private buildParams(statement: BoundStatement) {

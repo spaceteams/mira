@@ -1,11 +1,14 @@
 {
-  "name": "postgresql-client",
-  "version": "1.0.0",
-  "main": "build/index.js",
+  "name": "@lyra/postgresql-client",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "types": "dist/clients/postgresql-client/index.d.ts",
   "scripts": {
     "test": "vitest",
     "test:ci": "vitest run",
-    "build": "esbuild src/index.ts --outdir=build --bundle --minify --platform=node"
+    "clean": "rm -rf build dist",
+    "bundle": "rollup -c ../../rollup.config.mjs",
+    "build": "npm run clean && npm run bundle"
   },
   "dependencies": {
     "parser": "file:../../packages/model",

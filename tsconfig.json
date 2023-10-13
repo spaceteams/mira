@@ -1,21 +1,12 @@
 {
+  "extends": "./tsconfig.build.json",
   "compilerOptions": {
-    "strict": true,
-    "moduleResolution": "Node",
-    "noImplicitAny": true,
-    "noEmit": true,
-    "target": "ES2022",
-    "types": ["vitest/globals"],
-    "resolveJsonModule": true,
-    "outDir": "bin",
-    "module": "commonjs",
-    "sourceMap": true,
-    "experimentalDecorators": true,
-    "pretty": true,
-    "noFallthroughCasesInSwitch": true,
-    "noImplicitReturns": true,
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
-    "allowSyntheticDefaultImports": true
-  }
+      "baseUrl": "./",
+      "types": ["vitest/globals"],
+  },
+  "include": [
+      "./cli/**.ts",
+      "./clients/*/**.ts",
+      "./packages/*/**.ts"
+  ]
 }

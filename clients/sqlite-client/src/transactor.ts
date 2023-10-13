@@ -1,15 +1,15 @@
-import { db } from './db'
+import { exec } from './db'
 import { LyraSqliteClient } from './lyra-sqlite-client'
 
 export async function withTransaction(
   run: (client: LyraSqliteClient) => Promise<void> | void,
 ) {
   try {
-    db.exec('BEGIN')
+    exec('BEGIN')
     await run(new LyraSqliteClient())
-    db.exec('COMMIT')
+    exec('COMMIT')
   } catch (e) {
-    db.exec('ROLLBACK')
+    exec('ROLLBACK')
     throw e
   }
 }
@@ -18,9 +18,9 @@ export async function withTestClient(
   run: (client: LyraSqliteClient) => Promise<void> | void,
 ) {
   try {
-    db.exec('BEGIN')
+    exec('BEGIN')
     await run(new LyraSqliteClient())
   } finally {
-    db.exec('ROLLBACK')
+    exec('ROLLBACK')
   }
 }

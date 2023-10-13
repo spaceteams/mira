@@ -1,11 +1,14 @@
 {
-  "name": "app",
+  "name": "@lyra/cli",
   "version": "0.0.1",
-  "main": "build/index.js",
+  "main": "dist/index.js",
+  "types": "dist/cli/index.d.ts",
   "scripts": {
     "test": "vitest",
     "test:ci": "vitest run",
-    "build": "esbuild src/index.ts --outdir=build --bundle --minify --platform=node"
+    "clean": "rm -rf build dist",
+    "bundle": "rollup -c ../rollup.config.mjs",
+    "build": "npm run clean && npm run bundle"
   },
   "dependencies": {
     "chokidar": "3.5.3",
