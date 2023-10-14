@@ -127,7 +127,8 @@ export const partialStar: Fixture = {
   dialects: ['postgresql', 'sqlite', 'mysql', 'mariadb'],
   schemaSql: joinAndAggregate.schemaSql,
   schema: joinAndAggregate.schema,
-  sql: 'SELECT o.* FROM orders o JOIN order_details od ON o.order_id = od.order_id',
+  sql:
+    'SELECT o.* FROM orders o JOIN order_details od ON o.order_id = od.order_id',
   statement: {
     columns: [
       {

@@ -1,12 +1,12 @@
 import { exec } from './db'
-import { LyraSqliteClient } from './lyra-sqlite-client'
+import { MiraSqliteClient } from './mira-sqlite-client'
 
 export async function withTransaction(
-  run: (client: LyraSqliteClient) => Promise<void> | void,
+  run: (client: MiraSqliteClient) => Promise<void> | void,
 ) {
   try {
     exec('BEGIN')
-    await run(new LyraSqliteClient())
+    await run(new MiraSqliteClient())
     exec('COMMIT')
   } catch (e) {
     exec('ROLLBACK')
@@ -15,11 +15,11 @@ export async function withTransaction(
 }
 
 export async function withTestClient(
-  run: (client: LyraSqliteClient) => Promise<void> | void,
+  run: (client: MiraSqliteClient) => Promise<void> | void,
 ) {
   try {
     exec('BEGIN')
-    await run(new LyraSqliteClient())
+    await run(new MiraSqliteClient())
   } finally {
     exec('ROLLBACK')
   }

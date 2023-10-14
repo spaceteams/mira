@@ -1,14 +1,14 @@
-import { BoundStatement, Client, ResultRow } from 'model'
-import { run, all } from './db'
+import { BoundStatement, Client, ResultRow } from 'mira-core'
+import { all, run } from './db'
 
-export class LyraSqliteClient implements Client {
+export class MiraSqliteClient implements Client {
   public constructor() {}
 
   static executeVoid(statement: BoundStatement): void {
-    return new LyraSqliteClient().executeVoid(statement)
+    return new MiraSqliteClient().executeVoid(statement)
   }
   static execute<T extends ResultRow>(statement: BoundStatement): T[] {
-    return new LyraSqliteClient().execute(statement)
+    return new MiraSqliteClient().execute(statement)
   }
 
   executeVoid(statement: BoundStatement): void {

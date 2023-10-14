@@ -7,7 +7,7 @@ import {
   StatementColumn,
   StatementVariable,
   TableAlias,
-} from 'model'
+} from 'mira-core'
 import { parseNode } from './parse-node'
 import { capitalize } from './capitalize'
 
@@ -73,9 +73,9 @@ function buildVariable(
   return {
     position: variable.type === 'origin' ? offset : variable.name - 1,
     name: capitalize(
-      `${prefix}${prefix.length > 0 ? '_' : ''}${
-        column.column
-      }${operatorStringify(operator)}`,
+      `${prefix}${prefix.length > 0 ? '_' : ''}${column.column}${
+        operatorStringify(operator)
+      }`,
     ),
     dataType: columnType ?? {
       type: 'UNKNOWN',

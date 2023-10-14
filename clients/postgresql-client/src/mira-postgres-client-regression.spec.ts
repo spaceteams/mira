@@ -1,6 +1,6 @@
-import { windowFunctions } from '../../../packages/codegen/src/__snapshots__/windowFunctions-postgresql.snap'
-import { migrateAndCast } from '../../../packages/codegen/src/__snapshots__/migrateAndCast-postgresql.snap'
-import * as fixtures from 'model/src/fixtures'
+import { windowFunctions } from 'mira-codegen/src/__snapshots__/windowFunctions-postgresql.snap'
+import { migrateAndCast } from 'mira-codegen/src/__snapshots__/migrateAndCast-postgresql.snap'
+import * as fixtures from 'mira-core/src/fixtures'
 import { withTestClient } from './transactor'
 
 it('window functions', async () => {
@@ -26,14 +26,14 @@ it('window functions', async () => {
           "cumulative_amount": "3",
           "prev_sale_amount": null,
           "product": "p",
-          "sale_date": 2012-03-01T23:00:00.000Z,
+          "sale_date": 2012-03-02T00:00:00.000Z,
         },
         {
           "amount": "3",
           "cumulative_amount": "6",
           "prev_sale_amount": "3",
           "product": "p",
-          "sale_date": 2012-03-02T23:00:00.000Z,
+          "sale_date": 2012-03-03T00:00:00.000Z,
         },
       ]
     `)

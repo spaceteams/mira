@@ -1,4 +1,4 @@
-import { DataType, Statement, StatementVariable } from 'model'
+import { DataType, Statement, StatementVariable } from 'mira-core'
 import {
   createPrinter,
   createSourceFile,
@@ -89,8 +89,9 @@ export function generate(
       NodeFlags.Const,
     ),
   )
-  const executeVariant =
-    statement.columns.length === 0 ? 'executeVoid' : 'execute'
+  const executeVariant = statement.columns.length === 0
+    ? 'executeVoid'
+    : 'execute'
 
   const boundStatement = factory.createObjectLiteralExpression([
     factory.createPropertyAssignment('name', factory.createStringLiteral(name)),
@@ -159,7 +160,7 @@ export function generate(
           name,
           undefined,
           dataTypeToTsType(dataType),
-        ),
+        )
       ),
     ],
     undefined,
@@ -179,7 +180,7 @@ export function generate(
         ),
       ]),
     ),
-    factory.createStringLiteral('model'),
+    factory.createStringLiteral('mira-core'),
   )
 
   const file = factory.updateSourceFile(

@@ -1,11 +1,11 @@
-import { Schema, Statement, StatementVariable, TableAlias } from 'model'
+import { Schema, Statement, StatementVariable, TableAlias } from 'mira-core'
 import { Delete } from 'node-sql-parser'
 import { parseWhere } from './parse-where'
 
 export function parseDelete(
   node: Delete,
   schema: Schema,
-  tableHint?: string,
+  _tableHint?: string,
 ): Statement {
   const aliases = (node.table ?? []) as TableAlias[]
 

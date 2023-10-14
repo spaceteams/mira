@@ -1,4 +1,4 @@
-import { AsyncClient } from "model";
+import { AsyncClient } from "mira-core";
 export function cte(client: AsyncClient, whereRankNumLte: number) {
     const sql = `
     WITH ranked_orders AS (

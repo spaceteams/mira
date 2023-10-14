@@ -1,10 +1,12 @@
 {
   "exclude": [
-      "**/*.spec.ts",
-      "node_modules",
-      "build"
+    "**/*.spec.ts",
+    "node_modules",
+    "**/__snapshots__",
+    "build"
   ],
   "compilerOptions": {
+    "types": ["vitest/globals"],
     "strict": true,
     "moduleResolution": "Node",
     "noImplicitAny": true,
@@ -19,6 +21,6 @@
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
-    "declaration": true,    
+    "declaration": true
   }
 }

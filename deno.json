@@ -1,7 +1,8 @@
 {
   "lint": {
     "exclude": [
-      "build"
+      "**/build",
+      "**/dist"
     ],
     "rules": {
       "tags": [
@@ -11,7 +12,8 @@
   },
   "fmt": {
     "exclude": [
-      "build",
+      "**/build",
+      "**/dist",
       "packages/**/__snapshots__"
     ],
     "semiColons": false,

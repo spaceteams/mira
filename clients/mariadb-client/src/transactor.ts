@@ -1,14 +1,14 @@
 import { pool } from './pool'
-import { LyraMariadbClient } from './lyra-mariadb-client'
+import { MiraMariadbClient } from './mira-mariadb-client'
 
 export async function withTransaction(
-  run: (client: LyraMariadbClient) => Promise<void> | void,
+  run: (client: MiraMariadbClient) => Promise<void> | void,
 ) {
   const conn = await pool.getConnection()
 
   try {
     await conn.query('BEGIN')
-    await run(new LyraMariadbClient(conn))
+    await run(new MiraMariadbClient(conn))
     await conn.query('COMMIT')
   } catch (e) {
     await conn.query('ROLLBACK')
@@ -19,13 +19,13 @@ export async function withTransaction(
 }
 
 export async function withTestClient(
-  run: (client: LyraMariadbClient) => Promise<void> | void,
+  run: (client: MiraMariadbClient) => Promise<void> | void,
 ) {
   const conn = await pool.getConnection()
 
   try {
     await conn.query('BEGIN')
-    await run(new LyraMariadbClient(conn))
+    await run(new MiraMariadbClient(conn))
   } finally {
     await conn.query('ROLLBACK')
     conn.release()

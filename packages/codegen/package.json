@@ -1,11 +1,16 @@
 {
-  "name": "codegen",
-  "version": "1.0.0",
+  "name": "mira-codegen",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "vitest",
-    "test:ci": "vitest run"
+    "test:ci": "vitest run",
+    "clean": "rm -rf build dist",
+    "build": "rollup -c ../../rollup.config.mjs"
   },
   "dependencies": {
-    "parser": "file:../packages/model"
+    "mira-core": "0.0.1",
+    "typescript": "5.1.6"
   }
 }

@@ -4,7 +4,7 @@ import {
   Schema,
   Statement,
   StatementVariable,
-} from 'model'
+} from 'mira-core'
 import { AST, Insert_Replace } from 'node-sql-parser'
 import { Value } from './value'
 import { parseSelect } from './parse-select'
@@ -54,7 +54,7 @@ type Conflict = {
 export function parseInsertReplace(
   node: Insert_Replace,
   schema: Schema,
-  tableHint?: string,
+  _tableHint?: string,
 ): Statement {
   let variables: StatementVariable[] = []
   if (Array.isArray(node.values)) {

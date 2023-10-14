@@ -1,9 +1,9 @@
 import { watch } from 'chokidar'
 import { readFileSync, writeFileSync } from 'fs'
 import { parse } from 'path'
-import { parseSchema, parseStatement } from '../../packages/parser'
-import { Dialect, Schema } from 'model'
-import { generate, generateRaw } from 'codegen'
+import { parseSchema, parseStatement } from 'mira-parser'
+import { Dialect, Schema } from 'mira-core'
+import { generate, generateRaw } from 'mira-codegen'
 import yargs from 'yargs'
 import { globSync } from 'glob'
 

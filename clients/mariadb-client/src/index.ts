@@ -1,2 +1,2 @@
-export * from './lyra-mariadb-client'
+export * from './mira-mariadb-client'
 export * from './transactor'

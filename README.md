@@ -1,3 +1,3 @@
-# Lyra SQL
+# Mira
 
 write some README...

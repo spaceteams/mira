@@ -1,8 +1,13 @@
-import { ColumnRef } from 'node-sql-parser'
+import { ColumnRef, From } from 'node-sql-parser'
 import { parse } from '../parser'
 import { safeArray } from '../safe-array'
-import { DataType, DataTypeSchema, Dialect, Schema, TableSchema } from 'model'
-import { From } from 'node-sql-parser'
+import {
+  DataType,
+  DataTypeSchema,
+  Dialect,
+  Schema,
+  TableSchema,
+} from 'mira-core'
 
 type DataDefinition = {
   dataType: string
@@ -73,8 +78,8 @@ export function parseSchema(
             case 'add':
               {
                 const name = expr.column.column
-                table.columns[expr.column.column.toLowerCase()] =
-                  DataTypeSchema.parse({
+                table.columns[expr.column.column.toLowerCase()] = DataTypeSchema
+                  .parse({
                     ...expr.definition,
                     type: expr.definition.dataType,
                   })

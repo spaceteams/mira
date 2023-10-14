@@ -1,12 +1,16 @@
 {
-  "name": "parser",
-  "version": "1.0.0",
+  "name": "mira-parser",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "vitest",
-    "test:ci": "vitest run"
+    "test:ci": "vitest run",
+    "clean": "rm -rf build dist",
+    "build": "rollup -c ../../rollup.config.mjs"
   },
   "dependencies": {
-    "node-sql-parser": "4.9.0",
-    "parser": "file:../packages/model"
+    "mira-core": "0.0.1",
+    "node-sql-parser": "4.9.0"
   }
 }

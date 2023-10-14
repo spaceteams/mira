@@ -1,4 +1,9 @@
-import { Schema, StatementColumn, StatementVariable, TableAlias } from 'model'
+import {
+  Schema,
+  StatementColumn,
+  StatementVariable,
+  TableAlias,
+} from 'mira-core'
 import { extractVariables, isBinaryExpression } from './binary-expression'
 
 export function parseWhere(

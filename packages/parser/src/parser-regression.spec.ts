@@ -1,7 +1,7 @@
-import { Fixture, allRegressionCases } from 'model/src/fixtures'
+import { allRegressionCases, Fixture } from 'mira-core/src/fixtures'
+import { Dialect } from 'mira-core'
 import { parseSchema } from './schema'
 import { parseStatement } from './statement'
-import { Dialect } from 'model'
 
 const allTestsWithDialect = allRegressionCases.flatMap(
   ([name, fixture]) =>
