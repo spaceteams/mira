@@ -7,7 +7,7 @@ import {
   StatementColumn,
   StatementVariable,
   TableAlias,
-} from '@lyra/core'
+} from 'mira-core'
 import { parseNode } from './parse-node'
 import { capitalize } from './capitalize'
 

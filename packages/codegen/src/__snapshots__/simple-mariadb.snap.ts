@@ -1,4 +1,4 @@
-import { AsyncClient } from "@lyra/core";
+import { AsyncClient } from "mira-core";
 export function simple(client: AsyncClient, whereAgeGt: number) {
     const sql = `SELECT name FROM employees WHERE age > $1;`;
     return client.execute<{

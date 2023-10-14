@@ -3,7 +3,7 @@ import {
   StatementColumn,
   StatementVariable,
   TableAlias,
-} from '@lyra/core'
+} from 'mira-core'
 import { extractVariables, isBinaryExpression } from './binary-expression'
 
 export function parseWhere(

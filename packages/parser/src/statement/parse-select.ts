@@ -10,7 +10,7 @@ import {
   StatementVariable,
   TableAlias,
   withStatement,
-} from '@lyra/core'
+} from 'mira-core'
 import { AST, Column, ColumnRef, Select, With } from 'node-sql-parser'
 import { safeArray } from '../safe-array'
 import { parseWhere } from './parse-where'

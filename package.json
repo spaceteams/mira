@@ -1,5 +1,5 @@
 {
-  "name": "lyra-sql",
+  "name": "mira",
   "version": "0.0.1",
   "description": "generate typesafe typescript apis from sql statements",
   "workspaces": [

@@ -1,4 +1,4 @@
-import { Client } from "@lyra/core";
+import { Client } from "mira-core";
 export function multiParamInsert(client: Client, name: string, points: number) {
     const sql = `
     INSERT INTO customers (name, points) VALUES ($1, $2);

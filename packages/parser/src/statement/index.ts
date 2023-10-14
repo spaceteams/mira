@@ -1,4 +1,4 @@
-import { Dialect, Schema, Statement } from '@lyra/core'
+import { Dialect, Schema, Statement } from 'mira-core'
 import { parse } from '../parser'
 import { parseNode } from './parse-node'
 

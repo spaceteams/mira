@@ -1,4 +1,4 @@
-import { DataType, Statement, StatementVariable } from '@lyra/core'
+import { DataType, Statement, StatementVariable } from 'mira-core'
 import {
   createPrinter,
   createSourceFile,
@@ -180,7 +180,7 @@ export function generate(
         ),
       ]),
     ),
-    factory.createStringLiteral('@lyra/core'),
+    factory.createStringLiteral('mira-core'),
   )
 
   const file = factory.updateSourceFile(

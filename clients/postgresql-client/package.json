@@ -1,5 +1,5 @@
 {
-  "name": "@lyra/postgresql-client",
+  "name": "mira-postgresql-client",
   "version": "0.0.1",
   "main": "dist/index.js",
   "types": "dist/clients/postgresql-client/index.d.ts",
@@ -10,11 +10,11 @@
     "build": "rollup -c ../../rollup.config.mjs"
   },
   "dependencies": {
-    "@lyra/core": "0.0.1",
+    "mira-core": "0.0.1",
     "pg": "8.11.1"
   },
   "devDependencies": {
-    "@lyra/codegen": "0.0.1",
+    "mira-codegen": "0.0.1",
     "@types/pg": "8.10.2",
     "testcontainers": "9.12.0"
   }

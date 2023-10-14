@@ -1,5 +1,5 @@
 {
-  "name": "@lyra/cli",
+  "name": "mira-cli",
   "version": "0.0.1",
   "main": "dist/index.js",
   "types": "dist/cli/index.d.ts",
@@ -12,9 +12,9 @@
   "dependencies": {
     "chokidar": "3.5.3",
     "glob": "10.3.3",
-    "@lyra/codegen": "0.0.1",
-    "@lyra/core": "0.0.1",
-    "@lyra/parser": "0.0.1"
+    "mira-codegen": "0.0.1",
+    "mira-core": "0.0.1",
+    "mira-parser": "0.0.1"
   },
   "devDependencies": {
     "@types/yargs": "17.0.24"

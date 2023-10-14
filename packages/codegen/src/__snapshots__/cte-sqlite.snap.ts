@@ -1,4 +1,4 @@
-import { Client } from "@lyra/core";
+import { Client } from "mira-core";
 export function cte(client: Client, whereRankNumLte: number) {
     const sql = `
     WITH ranked_orders AS (

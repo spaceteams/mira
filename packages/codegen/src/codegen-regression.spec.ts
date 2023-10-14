@@ -1,4 +1,4 @@
-import { allRegressionCases } from '@lyra/core/src/fixtures'
+import { allRegressionCases } from 'mira-core/src/fixtures'
 import { generate } from './generate'
 
 test.each(allRegressionCases)('%s', (name, fixture) => {

@@ -7,7 +7,7 @@ import {
   Dialect,
   Schema,
   TableSchema,
-} from '@lyra/core'
+} from 'mira-core'
 
 type DataDefinition = {
   dataType: string

@@ -1,14 +1,14 @@
-import { AsyncClient, BoundStatement, ResultRow } from '@lyra/core'
+import { AsyncClient, BoundStatement, ResultRow } from 'mira-core'
 import { ClientBase } from 'pg'
 import { pool } from './pool'
 
-export class LyraPostgresClient implements AsyncClient {
+export class MiraPostgresClient implements AsyncClient {
   public constructor(private client: Pick<ClientBase, 'query'>) {}
   static executeVoid(statement: BoundStatement): Promise<void> {
-    return new LyraPostgresClient(pool).executeVoid(statement)
+    return new MiraPostgresClient(pool).executeVoid(statement)
   }
   static execute<T extends ResultRow>(statement: BoundStatement): Promise<T[]> {
-    return new LyraPostgresClient(pool).execute(statement)
+    return new MiraPostgresClient(pool).execute(statement)
   }
 
   async executeVoid(statement: BoundStatement): Promise<void> {

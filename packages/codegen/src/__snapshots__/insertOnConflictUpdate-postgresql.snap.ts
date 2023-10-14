@@ -1,4 +1,4 @@
-import { AsyncClient } from "@lyra/core";
+import { AsyncClient } from "mira-core";
 export function insertOnConflictUpdate(client: AsyncClient, customerId: number, name: string, onConflictSetName: string) {
     const sql = `
     INSERT INTO customers (customer_id, name) VALUES ($1, $2)

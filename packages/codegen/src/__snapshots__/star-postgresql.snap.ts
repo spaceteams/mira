@@ -1,4 +1,4 @@
-import { AsyncClient } from "@lyra/core";
+import { AsyncClient } from "mira-core";
 export function star(client: AsyncClient) {
     const sql = `SELECT * FROM orders`;
     return client.execute<{

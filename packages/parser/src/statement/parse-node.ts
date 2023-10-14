@@ -3,7 +3,7 @@ import { parseInsertReplace } from './parse-insert-replace'
 import { parseDelete } from './parse-delete'
 import { parseUpdate } from './parse-update'
 import { AST } from 'node-sql-parser'
-import { Schema, Statement } from '@lyra/core'
+import { Schema, Statement } from 'mira-core'
 
 export function parseNode(
   node: AST,

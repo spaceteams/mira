@@ -93,7 +93,7 @@ export function generateRaw(
         ),
       ]),
     ),
-    factory.createStringLiteral('@lyra/core'),
+    factory.createStringLiteral('mira-core'),
   )
 
   const file = factory.updateSourceFile(

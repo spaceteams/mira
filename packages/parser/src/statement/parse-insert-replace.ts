@@ -4,7 +4,7 @@ import {
   Schema,
   Statement,
   StatementVariable,
-} from '@lyra/core'
+} from 'mira-core'
 import { AST, Insert_Replace } from 'node-sql-parser'
 import { Value } from './value'
 import { parseSelect } from './parse-select'

@@ -1,4 +1,4 @@
-import { Schema, Statement, StatementVariable, TableAlias } from '@lyra/core'
+import { Schema, Statement, StatementVariable, TableAlias } from 'mira-core'
 import { Delete } from 'node-sql-parser'
 import { parseWhere } from './parse-where'
 

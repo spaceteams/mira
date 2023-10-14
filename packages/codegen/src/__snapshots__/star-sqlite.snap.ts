@@ -1,4 +1,4 @@
-import { Client } from "@lyra/core";
+import { Client } from "mira-core";
 export function star(client: Client) {
     const sql = `SELECT * FROM orders`;
     return client.execute<{

@@ -1,6 +1,6 @@
-import { windowFunctions } from '@lyra/codegen/src/__snapshots__/windowFunctions-postgresql.snap'
-import { migrateAndCast } from '@lyra/codegen/src/__snapshots__/migrateAndCast-postgresql.snap'
-import * as fixtures from '@lyra/core/src/fixtures'
+import { windowFunctions } from 'mira-codegen/src/__snapshots__/windowFunctions-postgresql.snap'
+import { migrateAndCast } from 'mira-codegen/src/__snapshots__/migrateAndCast-postgresql.snap'
+import * as fixtures from 'mira-core/src/fixtures'
 import { withTestClient } from './transactor'
 
 it('window functions', async () => {

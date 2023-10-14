@@ -1,4 +1,4 @@
-import { AsyncClient } from "@lyra/core";
+import { AsyncClient } from "mira-core";
 export function partialStar(client: AsyncClient) {
     const sql = `SELECT o.* FROM orders o JOIN order_details od ON o.order_id = od.order_id`;
     return client.execute<{

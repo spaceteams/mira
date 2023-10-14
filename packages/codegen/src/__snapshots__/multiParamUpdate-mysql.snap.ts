@@ -1,4 +1,4 @@
-import { AsyncClient } from "@lyra/core";
+import { AsyncClient } from "mira-core";
 export function multiParamUpdate(client: AsyncClient, setPointsPlus: number, whereNameEq: string) {
     const sql = `
   UPDATE customers SET points = points + $1 WHERE name = $2;

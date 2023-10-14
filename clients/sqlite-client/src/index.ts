@@ -1,2 +1,2 @@
-export * from './lyra-sqlite-client'
+export * from './mira-sqlite-client'
 export * from './transactor'

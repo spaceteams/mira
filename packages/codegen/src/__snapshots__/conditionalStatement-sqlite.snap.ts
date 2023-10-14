@@ -1,4 +1,4 @@
-import { Client } from "@lyra/core";
+import { Client } from "mira-core";
 export function conditionalStatement(client: Client, whereSalaryGt: number) {
     const sql = `
         SELECT name,

@@ -1,4 +1,4 @@
-import { AsyncClient } from "@lyra/core";
+import { AsyncClient } from "mira-core";
 export function subquery(client: AsyncClient, whereGradeGt: number) {
     const sql = `
     SELECT name, major FROM students
